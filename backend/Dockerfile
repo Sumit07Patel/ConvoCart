@@ -15,4 +15,5 @@ USER app
 
 EXPOSE 8000 9000
 # Default: the agent service. docker-compose overrides the command for the store, seed and cron.
-CMD ["sh", "-c", "uvicorn convocart.app:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# SEED_ON_START=1 (hosting with a throwaway SQLite file, e.g. Render free) reseeds the demo store at boot.
+CMD ["sh", "-c", "if [ \"$SEED_ON_START\" = 1 ]; then python -m scripts.seed --force; fi && exec uvicorn convocart.app:app --host 0.0.0.0 --port ${PORT:-8000}"]

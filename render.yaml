@@ -10,8 +10,8 @@ services:
     dockerContext: ./backend
     plan: free
     healthCheckPath: /health
-    dockerCommand: sh -c "python -m scripts.seed --force && uvicorn convocart.app:app --host 0.0.0.0 --port $PORT"
     envVars:
+      - {key: SEED_ON_START, value: "1"}   # reseed the demo store at boot (SQLite in /tmp is thrown away on restart)
       - {key: DATABASE_URL, value: "sqlite:////tmp/convocart.db"}
       - {key: STORE_MODE, value: local}
       - {key: LLM_PROVIDER, value: groq}
