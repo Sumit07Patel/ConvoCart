@@ -1,0 +1,1076 @@
+{
+  "summary": {
+    "k": 4,
+    "queries": 40,
+    "hit_rate": 1.0,
+    "by_language": {
+      "en": {
+        "n": 16,
+        "hit_rate": 1.0
+      },
+      "hi": {
+        "n": 10,
+        "hit_rate": 1.0
+      },
+      "hinglish": {
+        "n": 14,
+        "hit_rate": 1.0
+      }
+    },
+    "holdout": {
+      "queries": 12,
+      "hit_rate": 0.833,
+      "by_language": {
+        "en": {
+          "n": 5,
+          "hit_rate": 1.0
+        },
+        "hi": {
+          "n": 3,
+          "hit_rate": 1.0
+        },
+        "hinglish": {
+          "n": 4,
+          "hit_rate": 0.5
+        }
+      }
+    },
+    "invalid_queries": [],
+    "embedder": "hashing-ngram-v1",
+    "backend": "numpy",
+    "catalog_size": 114
+  },
+  "rows": [
+    {
+      "id": "s01",
+      "set": "tuned",
+      "lang": "en",
+      "q": "lightweight waterproof jacket for the monsoon under 3000",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "lightweight waterproof jacket monsoon rain waterproof",
+        "max_price": 3000,
+        "categories": [
+          "rain jacket"
+        ]
+      },
+      "top": [
+        "KL-RJ-006",
+        "KL-RJ-008"
+      ]
+    },
+    {
+      "id": "s02",
+      "set": "tuned",
+      "lang": "en",
+      "q": "a warm jacket for a snow trip to Manali",
+      "hit": true,
+      "n_relevant": 7,
+      "understood": {
+        "text": "warm jacket snow trip manali",
+        "categories": [
+          "winter jacket"
+        ]
+      },
+      "top": [
+        "KL-WJ-007",
+        "KL-WJ-003",
+        "KL-WJ-006",
+        "KL-WJ-002"
+      ]
+    },
+    {
+      "id": "s03",
+      "set": "tuned",
+      "lang": "en",
+      "q": "linen kurta for summer",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "linen kurta summer",
+        "categories": [
+          "kurta"
+        ]
+      },
+      "top": [
+        "KL-KU-001",
+        "KL-KU-006",
+        "KL-KU-003",
+        "KL-KU-007"
+      ]
+    },
+    {
+      "id": "s04",
+      "set": "tuned",
+      "lang": "en",
+      "q": "running shoes size UK 9",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "running sneakers shoes",
+        "categories": [
+          "sneakers",
+          "sandals"
+        ],
+        "size": "UK9"
+      },
+      "top": [
+        "KL-SN-001",
+        "KL-SN-006",
+        "KL-SN-004",
+        "KL-SN-005"
+      ]
+    },
+    {
+      "id": "s05",
+      "set": "tuned",
+      "lang": "en",
+      "q": "something to keep my laptop dry in the rain",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "something keep laptop dry rain monsoon waterproof"
+      },
+      "top": [
+        "KL-BP-002",
+        "KL-CP-005",
+        "KL-RJ-007",
+        "KL-TR-006"
+      ]
+    },
+    {
+      "id": "s06",
+      "set": "tuned",
+      "lang": "en",
+      "q": "compact umbrella",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "compact umbrella",
+        "categories": [
+          "umbrella"
+        ]
+      },
+      "top": [
+        "KL-UM-001",
+        "KL-UM-004",
+        "KL-UM-003",
+        "KL-UM-002"
+      ]
+    },
+    {
+      "id": "s07",
+      "set": "tuned",
+      "lang": "en",
+      "q": "formal shirt that doesn't wrinkle when I travel",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "formal shirt that doesn t wrinkle when travel",
+        "categories": [
+          "shirt"
+        ]
+      },
+      "top": [
+        "KL-SH-003",
+        "KL-SH-001",
+        "KL-SH-007",
+        "KL-SH-002"
+      ]
+    },
+    {
+      "id": "s08",
+      "set": "tuned",
+      "lang": "en",
+      "q": "silk saree for a wedding",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "silk saree wedding festive",
+        "categories": [
+          "saree"
+        ]
+      },
+      "top": [
+        "KL-SR-001",
+        "KL-SR-006",
+        "KL-SR-003",
+        "KL-SR-004"
+      ]
+    },
+    {
+      "id": "s09",
+      "set": "tuned",
+      "lang": "en",
+      "q": "quick dry pants for trekking",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "quick-dry trousers trek",
+        "categories": [
+          "trousers"
+        ]
+      },
+      "top": [
+        "KL-TR-002",
+        "KL-TR-004",
+        "KL-TR-001",
+        "KL-TR-005"
+      ]
+    },
+    {
+      "id": "s10",
+      "set": "tuned",
+      "lang": "en",
+      "q": "sandals that won't get ruined in flooded streets",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "sandals that won t ruined flooded streets",
+        "categories": [
+          "sandals"
+        ]
+      },
+      "top": [
+        "KL-SD-001",
+        "KL-SD-004",
+        "KL-SD-005",
+        "KL-SD-002"
+      ]
+    },
+    {
+      "id": "s11",
+      "set": "tuned",
+      "lang": "en",
+      "q": "festive kurti for women under 2500",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "festive kurti women",
+        "max_price": 2500,
+        "categories": [
+          "kurti"
+        ],
+        "gender": "women"
+      },
+      "top": [
+        "KL-KW-004",
+        "KL-KW-006",
+        "KL-KW-003",
+        "KL-KW-007"
+      ]
+    },
+    {
+      "id": "s12",
+      "set": "tuned",
+      "lang": "en",
+      "q": "black t-shirt that stays cool in humid weather",
+      "hit": true,
+      "n_relevant": 3,
+      "understood": {
+        "text": "tshirt that stays cool humid weather",
+        "categories": [
+          "t-shirt"
+        ],
+        "color": "black"
+      },
+      "top": [
+        "KL-TS-001",
+        "KL-TS-004",
+        "KL-TS-003"
+      ]
+    },
+    {
+      "id": "s13",
+      "set": "tuned",
+      "lang": "en",
+      "q": "waterproof fitness band",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "waterproof fitness band"
+      },
+      "top": [
+        "KL-WT-003",
+        "KL-SN-003",
+        "KL-CP-005",
+        "KL-SC-004"
+      ]
+    },
+    {
+      "id": "s14",
+      "set": "tuned",
+      "lang": "en",
+      "q": "rfid wallet",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "rfid wallet",
+        "categories": [
+          "wallet"
+        ]
+      },
+      "top": [
+        "KL-AC-001",
+        "KL-AC-004",
+        "KL-AC-002",
+        "KL-AC-003"
+      ]
+    },
+    {
+      "id": "s15",
+      "set": "tuned",
+      "lang": "en",
+      "q": "warm socks for trekking",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "warm socks trek",
+        "categories": [
+          "socks"
+        ]
+      },
+      "top": [
+        "KL-SC-002",
+        "KL-SC-004",
+        "KL-SC-001",
+        "KL-SC-003"
+      ]
+    },
+    {
+      "id": "s16",
+      "set": "tuned",
+      "lang": "en",
+      "q": "hoodie between 1000 and 2000",
+      "hit": true,
+      "n_relevant": 3,
+      "understood": {
+        "text": "hoodie",
+        "max_price": 2000,
+        "min_price": 1000,
+        "categories": [
+          "hoodie"
+        ]
+      },
+      "top": [
+        "KL-HD-006",
+        "KL-HD-005",
+        "KL-HD-004"
+      ]
+    },
+    {
+      "id": "h01",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "monsoon ke liye ek halki waterproof jacket dikhao, 3000 ke andar",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "monsoon rain waterproof lightweight waterproof jacket",
+        "max_price": 3000,
+        "categories": [
+          "rain jacket"
+        ]
+      },
+      "top": [
+        "KL-RJ-006",
+        "KL-RJ-008"
+      ]
+    },
+    {
+      "id": "h02",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "sardi ke liye garam jacket chahiye",
+      "hit": true,
+      "n_relevant": 7,
+      "understood": {
+        "text": "winter warm warm jacket",
+        "categories": [
+          "winter jacket"
+        ]
+      },
+      "top": [
+        "KL-WJ-002",
+        "KL-WJ-001",
+        "KL-WJ-006",
+        "KL-WJ-003"
+      ]
+    },
+    {
+      "id": "h03",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "shaadi ke liye kurta dikhao",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "wedding festive kurta",
+        "categories": [
+          "kurta"
+        ]
+      },
+      "top": [
+        "KL-KU-002",
+        "KL-KU-003",
+        "KL-KU-005",
+        "KL-KU-001"
+      ]
+    },
+    {
+      "id": "h04",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "baarish mein pehenne wale joote",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "monsoon rain waterproof pehenne shoes",
+        "categories": [
+          "sneakers",
+          "sandals"
+        ]
+      },
+      "top": [
+        "KL-SN-003",
+        "KL-SD-001",
+        "KL-SN-005",
+        "KL-SN-006"
+      ]
+    },
+    {
+      "id": "h05",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "ek accha chhata chahiye jo hawa mein na toote",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "umbrella hawa na toote",
+        "categories": [
+          "umbrella"
+        ]
+      },
+      "top": [
+        "KL-UM-004",
+        "KL-UM-001",
+        "KL-UM-003",
+        "KL-UM-002"
+      ]
+    },
+    {
+      "id": "h06",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "garmi ke liye halki shirt",
+      "hit": true,
+      "n_relevant": 3,
+      "understood": {
+        "text": "summer breathable lightweight shirt",
+        "categories": [
+          "shirt"
+        ]
+      },
+      "top": [
+        "KL-SH-002",
+        "KL-SH-005",
+        "KL-SH-007",
+        "KL-SH-004"
+      ]
+    },
+    {
+      "id": "h07",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "laptop bag chahiye 2000 tak",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "laptop backpack bag",
+        "max_price": 2000,
+        "categories": [
+          "backpack"
+        ]
+      },
+      "top": [
+        "KL-BP-002"
+      ]
+    },
+    {
+      "id": "h08",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "mummy ke liye cotton saree",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "women cotton saree",
+        "categories": [
+          "saree"
+        ],
+        "gender": "women"
+      },
+      "top": [
+        "KL-SR-002",
+        "KL-SR-005",
+        "KL-SR-004",
+        "KL-SR-006"
+      ]
+    },
+    {
+      "id": "h09",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "trekking ke liye rucksack",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "trek rucksack backpack bag",
+        "categories": [
+          "backpack"
+        ]
+      },
+      "top": [
+        "KL-BP-003",
+        "KL-BP-001",
+        "KL-BP-004",
+        "KL-BP-002"
+      ]
+    },
+    {
+      "id": "h10",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "daud ke liye joote uk 8",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "running shoes",
+        "categories": [
+          "sneakers",
+          "sandals"
+        ],
+        "size": "UK8"
+      },
+      "top": [
+        "KL-SN-001",
+        "KL-SN-006",
+        "KL-SN-005",
+        "KL-SN-004"
+      ]
+    },
+    {
+      "id": "h11",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "office ke liye kurti 2500 se kam",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "office kurti",
+        "max_price": 2500,
+        "categories": [
+          "kurti"
+        ]
+      },
+      "top": [
+        "KL-KW-003",
+        "KL-KW-007",
+        "KL-KW-006",
+        "KL-KW-005"
+      ]
+    },
+    {
+      "id": "h12",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "kaala chhata",
+      "hit": true,
+      "n_relevant": 5,
+      "understood": {
+        "text": "umbrella",
+        "categories": [
+          "umbrella"
+        ],
+        "color": "black"
+      },
+      "top": [
+        "KL-UM-004",
+        "KL-UM-001",
+        "KL-UM-002",
+        "KL-UM-005"
+      ]
+    },
+    {
+      "id": "h13",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "bachcho ke liye rain jacket",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "kids rain monsoon waterproof jacket",
+        "categories": [
+          "rain jacket"
+        ],
+        "gender": "kids"
+      },
+      "top": [
+        "KL-RJ-008"
+      ]
+    },
+    {
+      "id": "h14",
+      "set": "tuned",
+      "lang": "hinglish",
+      "q": "sardiyon ke liye topi",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "winter warm cap",
+        "categories": [
+          "cap"
+        ]
+      },
+      "top": [
+        "KL-CP-003",
+        "KL-CP-005",
+        "KL-CP-002",
+        "KL-CP-001"
+      ]
+    },
+    {
+      "id": "d01",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "बारिश के लिए हल्की जैकेट दिखाओ, 3000 से कम",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "monsoon rain waterproof lightweight jacket",
+        "max_price": 3000,
+        "categories": [
+          "rain jacket"
+        ]
+      },
+      "top": [
+        "KL-RJ-006",
+        "KL-RJ-008"
+      ]
+    },
+    {
+      "id": "d02",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "शादी के लिए कुर्ता",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "wedding festive kurta",
+        "categories": [
+          "kurta"
+        ]
+      },
+      "top": [
+        "KL-KU-002",
+        "KL-KU-003",
+        "KL-KU-005",
+        "KL-KU-001"
+      ]
+    },
+    {
+      "id": "d03",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "सर्दी के लिए गरम जैकेट",
+      "hit": true,
+      "n_relevant": 7,
+      "understood": {
+        "text": "winter warm warm jacket",
+        "categories": [
+          "winter jacket"
+        ]
+      },
+      "top": [
+        "KL-WJ-002",
+        "KL-WJ-001",
+        "KL-WJ-006",
+        "KL-WJ-003"
+      ]
+    },
+    {
+      "id": "d04",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "बारिश में पहनने के जूते",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "monsoon rain waterproof पहनने shoes",
+        "categories": [
+          "sneakers",
+          "sandals"
+        ]
+      },
+      "top": [
+        "KL-SN-003",
+        "KL-SD-001",
+        "KL-SN-005",
+        "KL-SN-001"
+      ]
+    },
+    {
+      "id": "d05",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "एक छाता चाहिए",
+      "hit": true,
+      "n_relevant": 5,
+      "understood": {
+        "text": "umbrella",
+        "categories": [
+          "umbrella"
+        ]
+      },
+      "top": [
+        "KL-UM-004",
+        "KL-UM-003",
+        "KL-UM-001",
+        "KL-UM-002"
+      ]
+    },
+    {
+      "id": "d06",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "लैपटॉप बैग बारिश के लिए",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "लैपटॉप bag monsoon rain waterproof",
+        "categories": [
+          "backpack"
+        ]
+      },
+      "top": [
+        "KL-BP-002",
+        "KL-BP-003",
+        "KL-BP-001",
+        "KL-BP-007"
+      ]
+    },
+    {
+      "id": "d07",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "गर्मी के लिए कुर्ती",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "summer breathable kurti",
+        "categories": [
+          "kurti"
+        ]
+      },
+      "top": [
+        "KL-KW-005",
+        "KL-KW-002",
+        "KL-KW-001",
+        "KL-KW-007"
+      ]
+    },
+    {
+      "id": "d08",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "महिला के लिए साड़ी 4000 से कम",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "women saree",
+        "max_price": 4000,
+        "categories": [
+          "saree"
+        ],
+        "gender": "women"
+      },
+      "top": [
+        "KL-SR-003",
+        "KL-SR-006"
+      ]
+    },
+    {
+      "id": "d09",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "दौड़ के लिए जूते",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "running shoes",
+        "categories": [
+          "sneakers",
+          "sandals"
+        ]
+      },
+      "top": [
+        "KL-SN-001",
+        "KL-SN-006",
+        "KL-SN-005",
+        "KL-SN-004"
+      ]
+    },
+    {
+      "id": "d10",
+      "set": "tuned",
+      "lang": "hi",
+      "q": "ऑफिस के लिए शर्ट",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "office shirt",
+        "categories": [
+          "shirt"
+        ]
+      },
+      "top": [
+        "KL-SH-001",
+        "KL-SH-003",
+        "KL-SH-002",
+        "KL-SH-004"
+      ]
+    },
+    {
+      "id": "x01",
+      "set": "holdout",
+      "lang": "en",
+      "q": "rainproof jaket for bike rides",
+      "hit": true,
+      "n_relevant": 7,
+      "understood": {
+        "text": "rainproof jacket commute rides",
+        "categories": [
+          "rain jacket",
+          "winter jacket"
+        ]
+      },
+      "top": [
+        "KL-RJ-004",
+        "KL-RJ-003",
+        "KL-RJ-001",
+        "KL-WJ-003"
+      ]
+    },
+    {
+      "id": "x02",
+      "set": "holdout",
+      "lang": "en",
+      "q": "something smart for my dad to wear to office",
+      "hit": true,
+      "n_relevant": 6,
+      "understood": {
+        "text": "something smart dad wear office"
+      },
+      "top": [
+        "KL-KW-003",
+        "KL-SC-003",
+        "KL-SR-005",
+        "KL-SH-001"
+      ]
+    },
+    {
+      "id": "x03",
+      "set": "holdout",
+      "lang": "en",
+      "q": "chappals for a goa trip",
+      "hit": true,
+      "n_relevant": 6,
+      "understood": {
+        "text": "sandals goa trip",
+        "categories": [
+          "sandals"
+        ]
+      },
+      "top": [
+        "KL-SD-004",
+        "KL-SD-005",
+        "KL-SD-002",
+        "KL-SD-006"
+      ]
+    },
+    {
+      "id": "x04",
+      "set": "holdout",
+      "lang": "en",
+      "q": "gift for my wife for karva chauth",
+      "hit": true,
+      "n_relevant": 10,
+      "understood": {
+        "text": "gift women karva chauth",
+        "gender": "women"
+      },
+      "top": [
+        "KL-JN-004",
+        "KL-DP-003",
+        "KL-SR-006",
+        "KL-KW-005"
+      ]
+    },
+    {
+      "id": "x05",
+      "set": "holdout",
+      "lang": "en",
+      "q": "shoes that grip on wet roads",
+      "hit": true,
+      "n_relevant": 4,
+      "understood": {
+        "text": "shoes that grip wet roads",
+        "categories": [
+          "sneakers",
+          "sandals"
+        ]
+      },
+      "top": [
+        "KL-SN-005",
+        "KL-SN-006",
+        "KL-SD-004",
+        "KL-SD-001"
+      ]
+    },
+    {
+      "id": "x06",
+      "set": "holdout",
+      "lang": "hinglish",
+      "q": "pani mein kharab na ho aise jute",
+      "hit": false,
+      "n_relevant": 2,
+      "understood": {
+        "text": "pani kharab na aise shoes",
+        "categories": [
+          "sneakers",
+          "sandals"
+        ]
+      },
+      "top": [
+        "KL-SN-001",
+        "KL-SN-006",
+        "KL-SN-005",
+        "KL-SD-005"
+      ]
+    },
+    {
+      "id": "x07",
+      "set": "holdout",
+      "lang": "hinglish",
+      "q": "barsaati chahiye",
+      "hit": false,
+      "n_relevant": 8,
+      "understood": {
+        "text": "barsaati"
+      },
+      "top": [
+        "KL-KU-002",
+        "KL-KW-006",
+        "KL-SR-001",
+        "KL-KW-001"
+      ]
+    },
+    {
+      "id": "x08",
+      "set": "holdout",
+      "lang": "hinglish",
+      "q": "thandi mein pehenne ke liye kuch",
+      "hit": true,
+      "n_relevant": 15,
+      "understood": {
+        "text": "winter warm pehenne"
+      },
+      "top": [
+        "KL-WJ-002",
+        "KL-WJ-001",
+        "KL-CP-003",
+        "KL-TS-008"
+      ]
+    },
+    {
+      "id": "x09",
+      "set": "holdout",
+      "lang": "hinglish",
+      "q": "college ke liye bag sasta wala",
+      "hit": true,
+      "n_relevant": 7,
+      "understood": {
+        "text": "college bag sasta",
+        "categories": [
+          "backpack"
+        ]
+      },
+      "top": [
+        "KL-BP-005",
+        "KL-BP-001",
+        "KL-BP-007",
+        "KL-BP-002"
+      ]
+    },
+    {
+      "id": "x10",
+      "set": "holdout",
+      "lang": "hi",
+      "q": "बच्चों के लिए छाता",
+      "hit": true,
+      "n_relevant": 1,
+      "understood": {
+        "text": "kids umbrella",
+        "categories": [
+          "umbrella"
+        ],
+        "gender": "kids"
+      },
+      "top": [
+        "KL-UM-005"
+      ]
+    },
+    {
+      "id": "x11",
+      "set": "holdout",
+      "lang": "hi",
+      "q": "ट्रेकिंग के लिए जूते",
+      "hit": true,
+      "n_relevant": 2,
+      "understood": {
+        "text": "ट्रेकिंग shoes",
+        "categories": [
+          "sneakers",
+          "sandals"
+        ]
+      },
+      "top": [
+        "KL-SN-001",
+        "KL-SN-006",
+        "KL-SN-005",
+        "KL-SN-004"
+      ]
+    },
+    {
+      "id": "x12",
+      "set": "holdout",
+      "lang": "hi",
+      "q": "पापा के लिए घड़ी",
+      "hit": true,
+      "n_relevant": 4,
+      "understood": {
+        "text": "पापा watch",
+        "categories": [
+          "watch"
+        ]
+      },
+      "top": [
+        "KL-WT-004",
+        "KL-WT-001",
+        "KL-WT-003",
+        "KL-WT-002"
+      ]
+    }
+  ]
+}

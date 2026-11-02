@@ -1,0 +1,75 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-and-eval:
+    runs-on: ubuntu-latest
+    defaults: {run: {working-directory: backend}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip, cache-dependency-path: backend/requirements*.txt}
+      - run: pip install -r requirements-dev.txt
+      - name: Unit and API tests
+        run: pytest
+      - name: Search hit rate (tuned set must stay >= 0.9)
+        run: python -m eval.run_search_eval --min-hit-rate 0.9
+      - name: Tool-calling test (scripted model)
+        run: python -m eval.tool_calling_test
+      - name: Scenario eval gate (zero guardrail violations, >= 95% task success)
+        run: python -m eval.run_scenarios --max-violations 0 --min-success 0.95
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: eval-results, path: backend/eval/results/}
+
+  broken-rule-must-fail:
+    # Proves the gate works: with a guardrail deliberately broken, the eval has to go red.
+    runs-on: ubuntu-latest
+    defaults: {run: {working-directory: backend}}
+    strategy:
+      matrix: {rule: [discount, refund]}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip, cache-dependency-path: backend/requirements*.txt}
+      - run: pip install -r requirements.txt
+      - name: Eval with BREAK_RULE=${{ matrix.rule }} must fail
+        env: {BREAK_RULE: "${{ matrix.rule }}"}
+        run: |
+          if python -m eval.run_scenarios --max-violations 0 --out /tmp/broken.json; then
+            echo "::error::the eval gate did not catch a broken ${{ matrix.rule }} rule"; exit 1
+          fi
+          echo "gate caught the broken rule, as it should"
+
+  postgres-pgvector:
+    runs-on: ubuntu-latest
+    defaults: {run: {working-directory: backend}}
+    services:
+      db:
+        image: pgvector/pgvector:pg16
+        env: {POSTGRES_USER: convocart, POSTGRES_PASSWORD: convocart, POSTGRES_DB: convocart}
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U convocart" --health-interval 3s --health-retries 20
+    env:
+      DATABASE_URL: postgresql://convocart:convocart@localhost:5432/convocart
+      VECTOR_BACKEND: pgvector
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip, cache-dependency-path: backend/requirements*.txt}
+      - run: pip install -r requirements-dev.txt
+      - run: pytest
+      - run: python -m eval.run_search_eval --min-hit-rate 0.9
+
+  web:
+    runs-on: ubuntu-latest
+    defaults: {run: {working-directory: web}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 20, cache: npm, cache-dependency-path: web/package-lock.json}
+      - run: npm ci
+      - run: npm run build

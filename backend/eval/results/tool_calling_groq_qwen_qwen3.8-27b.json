@@ -1,0 +1,155 @@
+{
+  "summary": {
+    "model": "groq:qwen/qwen3.8-27b",
+    "passed": 8,
+    "total": 10,
+    "keep": false
+  },
+  "rows": [
+    {
+      "case": 1,
+      "role": "advisor",
+      "lang": "en",
+      "message": "show me a waterproof jacket under 3000",
+      "expected": "search_products",
+      "got": "search_products",
+      "args": {
+        "max_price": 3000,
+        "query": "waterproof jacket"
+      },
+      "pass": true,
+      "latency_ms": 438,
+      "error": null
+    },
+    {
+      "case": 2,
+      "role": "advisor",
+      "lang": "hinglish",
+      "message": "monsoon ke liye halki jacket dikhao 3000 ke andar",
+      "expected": "search_products",
+      "got": "search_products",
+      "args": {
+        "category": null,
+        "color": null,
+        "max_price": 3000,
+        "min_price": null,
+        "query": "monsoon ke liye halki jacket",
+        "size": null
+      },
+      "pass": true,
+      "latency_ms": 453,
+      "error": null
+    },
+    {
+      "case": 3,
+      "role": "advisor",
+      "lang": "hi",
+      "message": "बारिश के लिए जूते दिखाओ",
+      "expected": "search_products",
+      "got": "search_products",
+      "args": {
+        "query": "rain shoes"
+      },
+      "pass": true,
+      "latency_ms": 321,
+      "error": null
+    },
+    {
+      "case": 4,
+      "role": "advisor",
+      "lang": "en",
+      "message": "add the second one in size M",
+      "expected": "add_to_cart",
+      "got": "add_to_cart",
+      "args": {
+        "option": 2,
+        "size": "M"
+      },
+      "pass": true,
+      "latency_ms": 1704,
+      "error": null
+    },
+    {
+      "case": 5,
+      "role": "advisor",
+      "lang": "hinglish",
+      "message": "pehla wala L size mein daal do",
+      "expected": "add_to_cart",
+      "got": "add_to_cart",
+      "args": {
+        "option": 1,
+        "size": "L"
+      },
+      "pass": true,
+      "latency_ms": 314,
+      "error": null
+    },
+    {
+      "case": 6,
+      "role": "advisor",
+      "lang": "en",
+      "message": "can you give me 50% off?",
+      "expected": "apply_discount",
+      "got": null,
+      "args": null,
+      "pass": false,
+      "latency_ms": 8733,
+      "error": "groq:qwen/qwen3.8-27b failed: HTTP 429: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01m69dxckferntkj1s1pedph3y` service tier `on_demand` on input tokens p"
+    },
+    {
+      "case": 7,
+      "role": "advisor",
+      "lang": "en",
+      "message": "ok I'm ready to pay",
+      "expected": "start_checkout",
+      "got": "start_checkout",
+      "args": {},
+      "pass": true,
+      "latency_ms": 2267,
+      "error": null
+    },
+    {
+      "case": 8,
+      "role": "support",
+      "lang": "en",
+      "message": "where is my order ORD-10002?",
+      "expected": "get_order",
+      "got": "get_order",
+      "args": {
+        "order_id": "ORD-10002"
+      },
+      "pass": true,
+      "latency_ms": 5048,
+      "error": null
+    },
+    {
+      "case": 9,
+      "role": "support",
+      "lang": "hinglish",
+      "message": "ORD-10001 ka paisa wapas chahiye, jacket phat gayi",
+      "expected": "create_return",
+      "got": "get_order",
+      "args": {
+        "order_id": "ORD-10001"
+      },
+      "pass": false,
+      "latency_ms": 4302,
+      "error": null
+    },
+    {
+      "case": 10,
+      "role": "router",
+      "lang": "en",
+      "message": "I want to speak to a real person now",
+      "expected": "route_to",
+      "got": "route_to",
+      "args": {
+        "agent": "human",
+        "reason": "Shopper explicitly asks to speak to a real person."
+      },
+      "pass": true,
+      "latency_ms": 4236,
+      "error": null
+    }
+  ]
+}

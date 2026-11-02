@@ -1,0 +1,80 @@
+# One command: docker compose up --build
+# Web chat: http://localhost:5173   Agent API: http://localhost:8000/docs   Store API: http://localhost:9000/docs
+# Local model instead of the scripted one:
+#   LLM_PROVIDER=ollama LLM_BASE_URL=http://ollama:11434/v1 docker compose --profile local-model up --build
+#   docker compose exec ollama ollama pull qwen2.5:7b-instruct
+
+x-backend: &backend
+  build: ./backend
+  env_file:
+    - path: .env
+      required: false
+  environment: &backend-env
+    DATABASE_URL: postgresql://convocart:convocart@db:5432/convocart
+    STORE_URL: http://store:9000
+    AGENT_URL: http://agent:8000
+    # read from your shell or from .env (Compose uses .env for ${...} substitution)
+    LLM_PROVIDER: ${LLM_PROVIDER:-scripted}
+    LLM_MODEL: ${LLM_MODEL:-}
+    LLM_API_KEY: ${LLM_API_KEY:-}
+    LLM_BASE_URL: ${LLM_BASE_URL:-}
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: convocart
+      POSTGRES_PASSWORD: convocart
+      POSTGRES_DB: convocart
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U convocart"]
+      interval: 3s
+      retries: 20
+
+  seed:
+    <<: *backend
+    command: python -m scripts.seed
+    depends_on:
+      db: {condition: service_healthy}
+
+  store:
+    <<: *backend
+    command: uvicorn convocart.store.api:app --host 0.0.0.0 --port 9000
+    ports: ["9000:9000"]
+    depends_on:
+      seed: {condition: service_completed_successfully}
+
+  agent:
+    <<: *backend
+    environment:
+      <<: *backend-env
+      STORE_MODE: http
+      VECTOR_BACKEND: pgvector
+    ports: ["8000:8000"]
+    depends_on:
+      store: {condition: service_started}
+
+  cron:
+    <<: *backend
+    command: python -m scripts.abandoned_cart_cron --every 300
+    depends_on:
+      agent: {condition: service_started}
+
+  web:
+    build:
+      context: ./web
+      args:
+        VITE_API_URL: http://localhost:8000
+    ports: ["5173:80"]
+    depends_on: [agent]
+
+  ollama:
+    image: ollama/ollama
+    profiles: [local-model]
+    volumes: [ollama:/root/.ollama]
+    ports: ["11434:11434"]
+
+volumes:
+  pgdata:
+  ollama:

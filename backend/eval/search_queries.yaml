@@ -1,0 +1,61 @@
+# Phase 3 search eval. A query is a hit when at least one of the top 4 results matches `expect`.
+# `expect` describes what the shopper actually wants (written by hand, independent of the parser):
+#   category: one or a list;  tags_any / tags_all: catalog tags;  max_price / min_price;  gender;  ids: exact ids
+# lang: en | hinglish | hi  (reported separately)
+# set: tuned (default) = written while building the lexicon, so optimistic;
+#      holdout = written after the lexicon was frozen and NOT used to tune it. Reported separately.
+
+- {id: s01, lang: en, q: "lightweight waterproof jacket for the monsoon under 3000", expect: {category: rain jacket, tags_any: [waterproof], max_price: 3000}}
+- {id: s02, lang: en, q: "a warm jacket for a snow trip to Manali", expect: {category: winter jacket, tags_any: [warm, insulated]}}
+- {id: s03, lang: en, q: "linen kurta for summer", expect: {category: kurta, tags_all: [linen]}}
+- {id: s04, lang: en, q: "running shoes size UK 9", expect: {category: sneakers, tags_any: [running]}}
+- {id: s05, lang: en, q: "something to keep my laptop dry in the rain", expect: {category: backpack, tags_any: [waterproof, water-resistant]}}
+- {id: s06, lang: en, q: "compact umbrella", expect: {category: umbrella, tags_any: [compact]}}
+- {id: s07, lang: en, q: "formal shirt that doesn't wrinkle when I travel", expect: {ids: [KL-SH-003]}}
+- {id: s08, lang: en, q: "silk saree for a wedding", expect: {category: saree, tags_all: [silk]}}
+- {id: s09, lang: en, q: "quick dry pants for trekking", expect: {category: trousers, tags_any: [quick-dry]}}
+- {id: s10, lang: en, q: "sandals that won't get ruined in flooded streets", expect: {category: sandals, tags_any: [waterproof, quick-dry]}}
+- {id: s11, lang: en, q: "festive kurti for women under 2500", expect: {category: kurti, tags_any: [festive], max_price: 2500}}
+- {id: s12, lang: en, q: "black t-shirt that stays cool in humid weather", expect: {category: t-shirt, tags_any: [breathable, quick-dry]}}
+- {id: s13, lang: en, q: "waterproof fitness band", expect: {ids: [KL-WT-003]}}
+- {id: s14, lang: en, q: "rfid wallet", expect: {category: wallet, tags_any: [rfid]}}
+- {id: s15, lang: en, q: "warm socks for trekking", expect: {category: socks, tags_any: [warm, merino]}}
+- {id: s16, lang: en, q: "hoodie between 1000 and 2000", expect: {category: hoodie, min_price: 1000, max_price: 2000}}
+- {id: h01, lang: hinglish, q: "monsoon ke liye ek halki waterproof jacket dikhao, 3000 ke andar", expect: {category: rain jacket, tags_any: [waterproof], max_price: 3000}}
+- {id: h02, lang: hinglish, q: "sardi ke liye garam jacket chahiye", expect: {category: winter jacket, tags_any: [warm]}}
+- {id: h03, lang: hinglish, q: "shaadi ke liye kurta dikhao", expect: {category: kurta, tags_any: [festive, wedding]}}
+- {id: h04, lang: hinglish, q: "baarish mein pehenne wale joote", expect: {category: [sneakers, sandals], tags_any: [waterproof]}}
+- {id: h05, lang: hinglish, q: "ek accha chhata chahiye jo hawa mein na toote", expect: {category: umbrella, tags_any: [windproof]}}
+- {id: h06, lang: hinglish, q: "garmi ke liye halki shirt", expect: {category: shirt, tags_any: [linen, summer, breathable]}}
+- {id: h07, lang: hinglish, q: "laptop bag chahiye 2000 tak", expect: {category: backpack, tags_any: [laptop], max_price: 2000}}
+- {id: h08, lang: hinglish, q: "mummy ke liye cotton saree", expect: {category: saree, tags_any: [cotton]}}
+- {id: h09, lang: hinglish, q: "trekking ke liye rucksack", expect: {category: backpack, tags_any: [trek]}}
+- {id: h10, lang: hinglish, q: "daud ke liye joote uk 8", expect: {category: sneakers, tags_any: [running]}}
+- {id: h11, lang: hinglish, q: "office ke liye kurti 2500 se kam", expect: {category: kurti, tags_any: [office, formal], max_price: 2500}}
+- {id: h12, lang: hinglish, q: "kaala chhata", expect: {category: umbrella}}
+- {id: h13, lang: hinglish, q: "bachcho ke liye rain jacket", expect: {ids: [KL-RJ-008]}}
+- {id: h14, lang: hinglish, q: "sardiyon ke liye topi", expect: {ids: [KL-CP-003]}}
+- {id: d01, lang: hi, q: "बारिश के लिए हल्की जैकेट दिखाओ, 3000 से कम", expect: {category: rain jacket, tags_any: [waterproof, water-resistant], max_price: 3000}}
+- {id: d02, lang: hi, q: "शादी के लिए कुर्ता", expect: {category: kurta, tags_any: [festive, wedding]}}
+- {id: d03, lang: hi, q: "सर्दी के लिए गरम जैकेट", expect: {category: winter jacket, tags_any: [warm]}}
+- {id: d04, lang: hi, q: "बारिश में पहनने के जूते", expect: {category: [sneakers, sandals], tags_any: [waterproof]}}
+- {id: d05, lang: hi, q: "एक छाता चाहिए", expect: {category: umbrella}}
+- {id: d06, lang: hi, q: "लैपटॉप बैग बारिश के लिए", expect: {category: backpack, tags_any: [waterproof]}}
+- {id: d07, lang: hi, q: "गर्मी के लिए कुर्ती", expect: {category: kurti, tags_any: [summer, linen, breathable]}}
+- {id: d08, lang: hi, q: "महिला के लिए साड़ी 4000 से कम", expect: {category: saree, max_price: 4000}}
+- {id: d09, lang: hi, q: "दौड़ के लिए जूते", expect: {category: sneakers, tags_any: [running]}}
+- {id: d10, lang: hi, q: "ऑफिस के लिए शर्ट", expect: {category: shirt, tags_any: [office, formal]}}
+
+# ---- holdout: written after the lexicon was frozen; misses here are left in, not fixed by tuning ----
+- {id: x01, set: holdout, lang: en, q: "rainproof jaket for bike rides", expect: {category: rain jacket, tags_any: [waterproof]}}
+- {id: x02, set: holdout, lang: en, q: "something smart for my dad to wear to office", expect: {category: [shirt, trousers, kurta], tags_any: [office, formal]}}
+- {id: x03, set: holdout, lang: en, q: "chappals for a goa trip", expect: {category: sandals}}
+- {id: x04, set: holdout, lang: en, q: "gift for my wife for karva chauth", expect: {category: [saree, kurti, dupatta], tags_any: [festive, wedding, silk]}}
+- {id: x05, set: holdout, lang: en, q: "shoes that grip on wet roads", expect: {category: [sneakers, sandals], tags_any: [grip]}}
+- {id: x06, set: holdout, lang: hinglish, q: "pani mein kharab na ho aise jute", expect: {category: [sneakers, sandals], tags_any: [waterproof]}}
+- {id: x07, set: holdout, lang: hinglish, q: "barsaati chahiye", expect: {category: rain jacket}}
+- {id: x08, set: holdout, lang: hinglish, q: "thandi mein pehenne ke liye kuch", expect: {tags_any: [warm]}}
+- {id: x09, set: holdout, lang: hinglish, q: "college ke liye bag sasta wala", expect: {category: backpack}}
+- {id: x10, set: holdout, lang: hi, q: "बच्चों के लिए छाता", expect: {ids: [KL-UM-005]}}
+- {id: x11, set: holdout, lang: hi, q: "ट्रेकिंग के लिए जूते", expect: {category: [sneakers, sandals], tags_any: [trek]}}
+- {id: x12, set: holdout, lang: hi, q: "पापा के लिए घड़ी", expect: {category: watch}}

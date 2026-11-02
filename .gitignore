@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+*.db
+*.db-wal
+*.db-shm
+.pytest_cache/
+web/node_modules/
+web/dist/
+backend/eval/results/load_stats_history.csv
+backend/eval/results/load_failures.csv
+backend/eval/results/load_exceptions.csv
+.venv/
+venv/
+*.tsbuildinfo
