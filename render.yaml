@@ -5,7 +5,9 @@ services:
   - type: web
     name: convocart-agent
     runtime: docker
-    rootDir: backend
+    # paths are relative to the repository root
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
     plan: free
     healthCheckPath: /health
     dockerCommand: sh -c "python -m scripts.seed --force && uvicorn convocart.app:app --host 0.0.0.0 --port $PORT"
