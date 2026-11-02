@@ -79,6 +79,8 @@ class Settings:
     llm_provider: str = field(default_factory=lambda: _env("LLM_PROVIDER", "scripted"))
     llm_model: str = field(default_factory=lambda: _env("LLM_MODEL", ""))
     llm_api_key: str = field(default_factory=lambda: _env("LLM_API_KEY", ""))
+    # Same provider, separate daily quota: used only when the main model's daily limit is reached.
+    llm_fallback_model: str = field(default_factory=lambda: _env("LLM_FALLBACK_MODEL", ""))
     llm_base_url: str = field(default_factory=lambda: _env("LLM_BASE_URL", ""))
     llm_timeout_s: float = field(default_factory=lambda: float(_env("LLM_TIMEOUT_S", "60")))
 

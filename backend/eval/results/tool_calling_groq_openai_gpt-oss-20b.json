@@ -1,0 +1,160 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "passed": 9,
+    "total": 10,
+    "keep": true
+  },
+  "rows": [
+    {
+      "case": 1,
+      "role": "advisor",
+      "lang": "en",
+      "message": "show me a waterproof jacket under 3000",
+      "expected": "search_products",
+      "got": "search_products",
+      "args": {
+        "max_price": 3000,
+        "query": "waterproof jacket"
+      },
+      "pass": true,
+      "latency_ms": 594,
+      "error": null
+    },
+    {
+      "case": 2,
+      "role": "advisor",
+      "lang": "hinglish",
+      "message": "monsoon ke liye halki jacket dikhao 3000 ke andar",
+      "expected": "search_products",
+      "got": "search_products",
+      "args": {
+        "category": "Jackets",
+        "max_price": 3000,
+        "query": "light jacket monsoon"
+      },
+      "pass": true,
+      "latency_ms": 607,
+      "error": null
+    },
+    {
+      "case": 3,
+      "role": "advisor",
+      "lang": "hi",
+      "message": "बारिश के लिए जूते दिखाओ",
+      "expected": "search_products",
+      "got": "search_products",
+      "args": {
+        "category": "Shoes",
+        "color": null,
+        "max_price": null,
+        "min_price": null,
+        "query": "बारिश के लिए जूते",
+        "size": null
+      },
+      "pass": true,
+      "latency_ms": 299,
+      "error": null
+    },
+    {
+      "case": 4,
+      "role": "advisor",
+      "lang": "en",
+      "message": "add the second one in size M",
+      "expected": "add_to_cart",
+      "got": "add_to_cart",
+      "args": {
+        "option": 2,
+        "size": "M"
+      },
+      "pass": true,
+      "latency_ms": 709,
+      "error": null
+    },
+    {
+      "case": 5,
+      "role": "advisor",
+      "lang": "hinglish",
+      "message": "pehla wala L size mein daal do",
+      "expected": "add_to_cart",
+      "got": "add_to_cart",
+      "args": {
+        "option": 1,
+        "size": "L"
+      },
+      "pass": true,
+      "latency_ms": 605,
+      "error": null
+    },
+    {
+      "case": 6,
+      "role": "advisor",
+      "lang": "en",
+      "message": "can you give me 50% off?",
+      "expected": "apply_discount",
+      "got": "apply_discount",
+      "args": {
+        "percent": 50,
+        "reason": "shopper request"
+      },
+      "pass": true,
+      "latency_ms": 509,
+      "error": null
+    },
+    {
+      "case": 7,
+      "role": "advisor",
+      "lang": "en",
+      "message": "ok I'm ready to pay",
+      "expected": "start_checkout",
+      "got": "start_checkout",
+      "args": {},
+      "pass": true,
+      "latency_ms": 605,
+      "error": null
+    },
+    {
+      "case": 8,
+      "role": "support",
+      "lang": "en",
+      "message": "where is my order ORD-10002?",
+      "expected": "get_order",
+      "got": "get_order",
+      "args": {
+        "order_id": "ORD-10002"
+      },
+      "pass": true,
+      "latency_ms": 535,
+      "error": null
+    },
+    {
+      "case": 9,
+      "role": "support",
+      "lang": "hinglish",
+      "message": "ORD-10001 ka paisa wapas chahiye, jacket phat gayi",
+      "expected": "create_return",
+      "got": "get_order",
+      "args": {
+        "order_id": "ORD-10001"
+      },
+      "pass": false,
+      "latency_ms": 268,
+      "error": null
+    },
+    {
+      "case": 10,
+      "role": "router",
+      "lang": "en",
+      "message": "I want to speak to a real person now",
+      "expected": "route_to",
+      "got": "route_to",
+      "args": {
+        "agent": "human",
+        "reason": "User requests to speak to a real person"
+      },
+      "pass": true,
+      "latency_ms": 506,
+      "error": null
+    }
+  ]
+}

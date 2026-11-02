@@ -12,4 +12,5 @@ def get_model(settings: Settings | None = None) -> ChatModel:
         return ScriptedModel()
     from .openai_compat import OpenAICompatModel
     return OpenAICompatModel(st.llm_provider, model=st.llm_model, api_key=st.llm_api_key,
-                             base_url=st.llm_base_url, timeout_s=st.llm_timeout_s)
+                             base_url=st.llm_base_url, timeout_s=st.llm_timeout_s,
+                             fallback_model=st.llm_fallback_model)

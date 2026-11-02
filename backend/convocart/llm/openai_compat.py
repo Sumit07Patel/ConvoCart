@@ -7,11 +7,14 @@ from __future__ import annotations
 
 import json
 import random
+import re
 import time
 
 import httpx
 
 from .base import ModelError, ModelReply, ToolCall
+
+DAILY_QUOTA = re.compile(r"per day|\bTPD\b|\bRPD\b|daily", re.I)
 
 PROVIDERS: dict[str, dict] = {
     "groq": {"base_url": "https://api.groq.com/openai/v1", "model": "openai/gpt-oss-120b"},
@@ -24,7 +27,8 @@ PROVIDERS: dict[str, dict] = {
 
 class OpenAICompatModel:
     def __init__(self, provider: str, model: str = "", api_key: str = "", base_url: str = "",
-                 timeout_s: float = 60, max_retries: int = 3, client: httpx.Client | None = None):
+                 timeout_s: float = 60, max_retries: int = 3, client: httpx.Client | None = None,
+                 fallback_model: str = ""):
         if provider not in PROVIDERS:
             raise ValueError(f"unknown provider {provider}")
         preset = PROVIDERS[provider]
@@ -37,9 +41,24 @@ class OpenAICompatModel:
         self.max_retries = max_retries
         self.client = client or httpx.Client(timeout=timeout_s)
         self.name = f"{provider}:{self.model}"
+        # Free tiers cap tokens per day per model. When the main model's daily quota is gone, a second model
+        # (with its own quota) answers for the next hour instead of every visitor getting an error.
+        self.fallback_model = fallback_model
+        self._fallback_until = 0.0
 
     def chat(self, messages, tools=None, tool_choice=None) -> ModelReply:
-        body: dict = {"model": self.model, "messages": messages, "temperature": 0.2}
+        if self.fallback_model and time.monotonic() < self._fallback_until:
+            return self._chat_with(self.fallback_model, messages, tools, tool_choice)
+        try:
+            return self._chat_with(self.model, messages, tools, tool_choice)
+        except ModelError as e:
+            if not (self.fallback_model and DAILY_QUOTA.search(str(e))):
+                raise
+            self._fallback_until = time.monotonic() + 3600
+            return self._chat_with(self.fallback_model, messages, tools, tool_choice)
+
+    def _chat_with(self, model: str, messages, tools=None, tool_choice=None) -> ModelReply:
+        body: dict = {"model": model, "messages": messages, "temperature": 0.2}
         if tools:
             body["tools"] = tools
             if tool_choice:
@@ -68,7 +87,7 @@ class OpenAICompatModel:
                     wait = float(retry_after) + random.random()  # per-minute limit: wait exactly as told
             if attempt < self.max_retries:
                 time.sleep(wait)
-        raise ModelError(f"{self.name} failed: {last_err}")
+        raise ModelError(f"{self.provider}:{model} failed: {last_err}")
 
     def _parse(self, data: dict, latency_ms: float) -> ModelReply:
         try:

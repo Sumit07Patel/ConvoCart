@@ -104,6 +104,23 @@ def test_openai_compat_quota_error_raises():
     assert calls["n"] == 1  # does not sit waiting an hour
 
 
+def test_openai_compat_falls_back_when_daily_quota_is_gone():
+    seen = []
+
+    def handler(req):
+        model = json.loads(req.content)["model"]
+        seen.append(model)
+        if model == "main":
+            return httpx.Response(429, headers={"retry-after": "3600"},
+                                  json={"error": {"message": "Rate limit reached on tokens per day (TPD)"}})
+        return httpx.Response(200, json={"model": model, "choices": [{"message": {"content": "ok"}}]})
+    m = OpenAICompatModel("groq", model="main", api_key="k", max_retries=1, fallback_model="backup",
+                          client=httpx.Client(transport=httpx.MockTransport(handler)))
+    assert m.chat([{"role": "user", "content": "hi"}]).model == "backup"
+    assert m.chat([{"role": "user", "content": "hi"}]).model == "backup"
+    assert seen == ["main", "backup", "backup"]  # after one quota error, skip the main model for a while
+
+
 def test_graph_survives_bad_model(db):
     """A model that returns garbage tool calls must not crash the turn or bypass rules."""
     from convocart.agents.graph import ConvoCartAgent
