@@ -1,7 +1,7 @@
 import type { Health } from "./App";
 
 const GITHUB = "https://github.com/Sumit07Patel";
-const REPO = "https://github.com/Sumit07Patel/convocart";
+const REPO = "https://github.com/Sumit07Patel/ConvoCart";
 const LINKEDIN = "https://www.linkedin.com/in/sumit-patel-87565b1b7/";
 const PULSEWAVE = "https://pulsewave-ai-support.onrender.com/";
 

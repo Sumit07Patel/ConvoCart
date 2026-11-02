@@ -88,7 +88,7 @@ Evals (from backend/): `pytest`; `python -m eval.run_search_eval`; `python -m ev
 
 ## Not done yet / next steps
 
-1. **Git**: the current git repository's root is the whole home folder (`/home/admin`), not the project. Create a repo inside `convocart/` (check `.gitignore`: `.env`, `.venv/`, `*.db`), first commit, push to GitHub (`github.com/Sumit07Patel/convocart`, which the site already links to).
+1. **Git: done (2026-11-02).** The project is its own repository in `convocart/`, pushed to `github.com/Sumit07Patel/ConvoCart` (branch `main`, SSH key works). The home-folder repository is not used for this project.
 2. **Render** (user wants to do this step together): Blueprint from `render.yaml`; set `LLM_PROVIDER=groq`, `LLM_MODEL=openai/gpt-oss-120b`, `LLM_API_KEY`, `EMAIL_ADDRESS`, `EMAIL_APP_PASSWORD`, `EMAIL_FROM`, `DEMO_LINKED_EMAIL`; check `PUBLIC_WEB_URL` and `VITE_API_URL` match the real service names.
 3. Finish the live scenario run (`--resume`) once the daily quota resets, then update the numbers on the site and README.
 4. Rotate the Gmail app password (it was pasted into a chat).

@@ -17,7 +17,7 @@ Say once, clearly: the store, customers and shoppers are simulated, and the eval
 
 # Resume bullets (only numbers measured in this repo)
 
-**ConvoCart: conversational commerce agent** · Python, FastAPI, LangGraph, Groq (gpt-oss-120b), React/TypeScript, Docker · [live demo](https://convocart-web.onrender.com) · [code](https://github.com/Sumit07Patel/convocart)
+**ConvoCart: conversational commerce agent** · Python, FastAPI, LangGraph, Groq (gpt-oss-120b), React/TypeScript, Docker · [live demo](https://convocart-web.onrender.com) · [code](https://github.com/Sumit07Patel/ConvoCart)
 
 - Built a multi-agent shopping and support assistant for a simulated Indian fashion brand (search, bargaining, cart, order tracking, returns, human handover) that works in English, Hindi and Hinglish, with every price, discount and privacy rule enforced in typed tools rather than prompts.
 - Built a 57-scenario evaluation suite with 8 adversarial cases (prompt injection, fake authority, other customers' orders); 0 guardrail violations, and a CI job proves the gate fails when a rule is deliberately broken.
