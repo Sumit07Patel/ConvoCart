@@ -15,18 +15,17 @@ Record with `docker compose up --build` running and the browser at http://localh
 
 Say once, clearly: the store, customers and shoppers are simulated, and the eval numbers shown are from the scripted model unless you have run a real model.
 
-# Resume bullets (fill only with numbers you measured)
+# Resume bullets (only numbers measured in this repo)
 
-Already measured in this repo (scripted model, simulated data):
+**ConvoCart: conversational commerce agent** · Python, FastAPI, LangGraph, Groq (gpt-oss-120b), React/TypeScript, Docker · [live demo](https://convocart-web.onrender.com) · [code](https://github.com/Sumit07Patel/convocart)
 
-- Built a multi-agent conversational commerce assistant (LangGraph, typed function calling, FastAPI, Postgres/pgvector, React/TypeScript, SMTP email, Docker) for a simulated D2C store, with English, Hindi and Hinglish support.
-- Enforced business rules in code (discount cap, store-only prices, own-orders-only, refund approval, consented come-back email that keeps only the bargained discount); a CI gate over 57 scenarios with 8 attack cases reports 0 guardrail violations and fails when a rule is deliberately broken.
-- Built multilingual product search with filters; 100% top-4 hit rate on a 40-query test set and 83% on a 12-query holdout (Hinglish 2/4), reported separately.
+- Built a multi-agent shopping and support assistant for a simulated Indian fashion brand (search, bargaining, cart, order tracking, returns, human handover) that works in English, Hindi and Hinglish, with every price, discount and privacy rule enforced in typed tools rather than prompts.
+- Built a 57-scenario evaluation suite with 8 adversarial cases (prompt injection, fake authority, other customers' orders); 0 guardrail violations, and a CI job proves the gate fails when a rule is deliberately broken.
+- Selected the model with a tool-calling benchmark (gpt-oss-120b 9/10 on Groq) and fixed real-model failures it exposed (category mismatches in search, wrong currency, invented delivery dates) with code-level guards.
+- Added event-driven email (signed `cart.abandoned` / `order.paid` webhooks): a consented come-back email that can only repeat the discount already bargained for, and an order confirmation built from the order record; per-address and per-visitor rate limits for the public demo.
 
-After you run a real model, replace the brackets:
+Short version (one line):
 
-- Evaluated on 57 scenarios with [model]: [X]% task success, [Y] guardrail violations, [Z] s 95th-percentile latency.
+> Built ConvoCart, a multilingual (English/Hindi/Hinglish) shopping agent with LangGraph and typed tools; business rules enforced in code, 57-scenario eval with 0 guardrail violations, event-driven emails, deployed on Render.
 
-Roadmap's line, to fill at the end:
-
-> Built a conversational commerce agent for a simulated D2C store (LangGraph, function calling, pgvector, email, Docker) with English, Hindi and Hinglish support and rule-enforcing tools. Evaluated on [N] scenarios: [X]% task success, [Y] guardrail violations, [Z] s 95th-percentile latency.
+Numbers and their conditions, in case you are asked: 57/57 scenarios and 0 violations use the rule-based stand-in model (proves rules and plumbing); on the live model, 9/10 tool-calling and 6/6 first scenarios so far (the full live run is limited by the free tier's 200k tokens/day). Search: 40/40 tuned, 10/12 holdout.
