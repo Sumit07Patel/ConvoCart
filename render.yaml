@@ -27,7 +27,7 @@ services:
       - {key: EMAIL_APP_PASSWORD, sync: false}     # Gmail app password (not your normal password)
       - {key: EMAIL_FROM, sync: false}             # optional sender shown, e.g. you+kesarlane@gmail.com
       - {key: DEMO_LINKED_EMAIL, sync: false}      # optional: your own address, linked to shopper C0001
-      - {key: PUBLIC_WEB_URL, value: "https://convocart-web.onrender.com"}   # link back to the chat in emails
+      - {key: PUBLIC_WEB_URL, value: "https://convocartweb.onrender.com"}   # link back to the chat in emails
       - {key: CORS_ORIGINS, value: "*"}
   - type: web
     name: convocart-web
@@ -36,4 +36,4 @@ services:
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
     envVars:
-      - {key: VITE_API_URL, value: "https://convocart-agent.onrender.com"}
+      - {key: VITE_API_URL, value: "https://convocart-umqc.onrender.com"}
