@@ -1,0 +1,86 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": 1.0,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 14095.8,
+      "p95": 19789.9,
+      "turns": 2
+    },
+    "by_category": {
+      "returns": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 34.5,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "return-two-step",
+      "category": "returns",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": true,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        14095.8,
+        19789.9
+      ],
+      "transcript": [
+        {
+          "user": "I want to return my rain jacket",
+          "route": "support",
+          "reply": "Your return request has been created.  \n**Return ID:** RET-5001  \n**Status:** pickup_scheduled – a courier will collect the jacket shortly.",
+          "tools": [
+            [
+              "list_my_orders",
+              "ok"
+            ],
+            [
+              "create_return",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "ORD-10001",
+          "route": "support",
+          "reply": "It looks like a return for order **ORD-10001** is already in progress (Return RET-5001).  \nYou can check its status or the courier’s tracking using the link we sent earlier.",
+          "tools": [
+            [
+              "get_order",
+              "ok"
+            ],
+            [
+              "create_return",
+              "return_exists"
+            ]
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

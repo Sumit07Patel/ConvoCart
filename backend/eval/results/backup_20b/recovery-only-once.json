@@ -1,0 +1,104 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": null,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 25485.9,
+      "p95": 35279.6,
+      "turns": 3
+    },
+    "by_category": {
+      "recovery": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 76.1,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "recovery-only-once",
+      "category": "recovery",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": null,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        5881.4,
+        25485.9,
+        35279.6
+      ],
+      "transcript": [
+        {
+          "user": "compact umbrella",
+          "route": "advisor",
+          "reply": "Here are a few compact umbrellas you might like:\n\n1. **Kesar Lane Compact 3‑Fold Umbrella** – ₹299 (MRP ₹399) – Size: ONE  \n2. **Kesar Lane UV Block Umbrella** – ₹299 – Size: ONE  \n3. **Kesar Lane Golf Size Umbrella** – ₹499 – Size: ONE  \n4. **Kesar Lane Windproof Auto Umbrella** – ₹699 – Size: ONE  \n\nAll are in stock. Which one would you like to add to your cart? If you need a different size (though all are “ONE”), let me know.",
+          "tools": [
+            [
+              "search_products",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "add the first one",
+          "route": "advisor",
+          "reply": "✅ Added “Kesar Lane Compact 3‑Fold Umbrella” (size ONE) to your cart.  \nCart total: ₹299.  \n\nWould you like to add anything else, apply a discount, or proceed to checkout?",
+          "tools": [
+            [
+              "add_to_cart",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "add the second one too",
+          "route": "advisor",
+          "reply": "✅ Added “Kesar Lane UV Block Umbrella” (size ONE) to your cart.  \n\n**Cart now:**  \n1 × Compact 3‑Fold Umbrella – ₹299  \n1 × UV Block Umbrella – ₹299  \n**Subtotal:** ₹598  \n**Discount:** 0%  \n**Total:** ₹598  \n\nWhat would you like to do next? (Add more items, apply a discount, or checkout)",
+          "tools": [
+            [
+              "add_to_cart",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "recovery": [
+            {
+              "status": "dry_run",
+              "detail": "no EMAIL_ADDRESS / EMAIL_APP_PASSWORD set; recorded only",
+              "body": "Hi Sneha, your cart still has the Kesar Lane Compact 3‑Fold Umbrella. Total ₹299. Checkout anytime or chat with us here: http://localhost:5173/?resume=web%3Aeval-recovery-only-once#assistant 😊\n\nDon't want these emails? Unsubscribe: http://localhost:8000/unsubscribe?email=c0004%40example.invalid&token=8a991580afcc91a19d767c50b859d678"
+            },
+            {
+              "status": "blocked",
+              "detail": "cart_limit_reached",
+              "body": ""
+            }
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

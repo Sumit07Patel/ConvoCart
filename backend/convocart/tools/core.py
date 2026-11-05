@@ -72,7 +72,7 @@ class ProductRefArgs(BaseModel):
 
 class AddToCartArgs(ProductRefArgs):
     size: str | None = Field(None, description="Size the shopper chose.")
-    color: str | None = Field(None, description="Colour the shopper chose, if any.")
+    color: str | None = Field(None, description="Colour the shopper chose. Leave out if they did not name one.")
     qty: int = Field(1, ge=1, le=10)
 
 
@@ -97,7 +97,7 @@ class ReturnArgs(BaseModel):
     order_id: str
     kind: Literal["return", "exchange", "refund"] = Field(..., description="return = send back for store credit/pickup, "
                                                           "exchange = different size, refund = money back")
-    reason: str = Field(..., description="Shopper's reason in a few words.")
+    reason: str = Field("not given", description="Shopper's reason in a few words, if they gave one.")
     exchange_size: str | None = Field(None, description="New size, for exchanges.")
 
 
@@ -247,8 +247,9 @@ def add_to_cart(ctx: ToolContext, a: AddToCartArgs) -> dict:
         return fail(e.code, e.message, in_stock_sizes=sizes)
     ctx.memory.pop("pending_add", None)
     ctx.memory["last_added"] = {"product_id": p["id"], "title": p["title"]}
+    others = sorted({v["color"] for v in in_stock if v["size"].upper() == size and v["color"] != variant["color"]})
     return ok(added={"product_id": p["id"], "title": p["title"], "size": variant["size"], "color": variant["color"],
-                     "qty": a.qty, "unit_price": p["price"]}, cart=cart)
+                     "other_colors": others, "qty": a.qty, "unit_price": p["price"]}, cart=cart)
 
 
 def view_cart(ctx: ToolContext, a: EmptyArgs) -> dict:

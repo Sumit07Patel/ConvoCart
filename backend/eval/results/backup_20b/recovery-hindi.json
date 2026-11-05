@@ -1,0 +1,87 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": null,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 2418.7,
+      "p95": 26927.6,
+      "turns": 2
+    },
+    "by_category": {
+      "recovery": "1/1"
+    },
+    "by_language": {
+      "hi": "1/1"
+    },
+    "wall_time_s": 45.7,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "recovery-hindi",
+      "category": "recovery",
+      "lang": "hi",
+      "success": true,
+      "tool_use_ok": null,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        2418.7,
+        26927.6
+      ],
+      "transcript": [
+        {
+          "user": "एक छाता चाहिए",
+          "route": "advisor",
+          "reply": "1️⃣ Kesar Lane UV Block Umbrella – ₹299 (साइज: ONE)  \n2️⃣ Kesar Lane Golf Size Umbrella – ₹499 (साइज: ONE)  \n3️⃣ Kesar Lane Compact 3‑Fold Umbrella – ₹299 (साइज: ONE)  \n4️⃣ Kesar Lane Windproof Auto Umbrella – ₹699 (साइज: ONE)  \n\nकिसी भी विकल्प को कार्ट में जोड़ने के लिए विकल्प संख्या बताइए।",
+          "tools": [
+            [
+              "search_products",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "पहला वाला जोड़ दो",
+          "route": "advisor",
+          "reply": "आपका छाता कार्ट में जोड़ दिया गया है।  \nकार्ट देखने के लिए `view_cart` कहें या कोई और आइटम जोड़ना हो तो बताइए।",
+          "tools": [
+            [
+              "add_to_cart",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "recovery": [
+            {
+              "status": "dry_run",
+              "detail": "no EMAIL_ADDRESS / EMAIL_APP_PASSWORD set; recorded only",
+              "body": "Hi Ramesh, आपकी कार्ट में अभी भी Kesar Lane UV Block Umbrella ₹299 का है। आप इसे अभी भी देख सकते हैं: http://localhost:5173/?resume=web%3Aeval-recovery-hindi#assistant 😊\n\nये ईमेल नहीं चाहिए? अनसब्सक्राइब: http://localhost:8000/unsubscribe?email=c0003%40example.invalid&token=73b7000a1b0e2e473e9adab37e30d12e"
+            }
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

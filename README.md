@@ -74,7 +74,7 @@ cd ../web && npm install && npm run dev      # http://localhost:5173
 
 ```bash
 cd backend
-pytest                                             # 54 tests
+pytest                                             # 61 tests
 python -m eval.run_search_eval                     # search hit rate, by language, plus holdout
 python -m eval.tool_calling_test                   # Phase 1 model check (10 cases)
 python -m eval.run_scenarios --max-violations 0    # 57 scenarios, the CI gate
@@ -96,10 +96,12 @@ Results are written to `backend/eval/results/`.
 | Deflection, simulated | 51/57 (89%) | our scenario mix, not real traffic |
 | Turn latency | p50 48 ms, p95 130 ms at 20 concurrent users, 0/1,050 errors | scripted model, SQLite, store over HTTP: overhead only |
 | Tool-calling test | 9/10 | **Groq `openai/gpt-oss-120b`**; the miss looked up the order before starting the refund |
-| Live scenarios | 6/6 so far (search and add-to-cart in EN, Hinglish, Hindi) | **Groq `openai/gpt-oss-120b`**; the full run stopped at the free tier's ~200k tokens/day and resumes with `--resume` |
+| Live scenarios, first run | 38/51 passed, 0 guardrail violations, 6/6 handovers | **Groq `openai/gpt-oss-120b`**, before any fixes |
+| Live scenarios, quota-blocked 6 | 5/6 passed, 0 guardrail violations | Groq `openai/gpt-oss-20b` (backup model) |
+| Live scenarios, 14 failures after fixes | 14/14 passed, 0 guardrail violations | Groq `openai/gpt-oss-20b` (backup model); agent and tests both changed |
 | Real email | come-back email (with the bargained 10%) and order confirmation delivered to a Gmail inbox | Gmail SMTP, live model |
 
-**The full scenario set has not finished on a real model yet.** Groq's free tier allows about 200,000 tokens a day, and the 57 scenarios need more, so the run is split over two days: `python -m eval.run_scenarios --provider groq --sleep 15 --resume`. Turns where the model never answered (quota, outage) are reported as "not run", never as passes or failures. See [docs/HANDOVER.md](docs/HANDOVER.md) for limits and next steps.
+**The fixes have not been rerun on the main model yet.** Groq's free tier allows about 200,000 tokens a day, and a full run of the 57 scenarios needs more. None of the 14 live failures broke a rule: most were scripted tests that did not answer a clarifying question or expected exact wording. The fixes changed the agent and some tests, so the first-run scores above are kept as measured. The other 43 scenarios have not been rerun on a real model since those changes.
 
 ## Repository
 
@@ -114,7 +116,7 @@ backend/
     channels/    mail.py (SMTP sending, unsubscribe links, demo address safety)
     app.py       agent API: /chat, webhooks, ops endpoints
   eval/          search queries, 57 scenarios, runners, results/
-  tests/         54 pytest tests
+  tests/         61 pytest tests
   locustfile.py
 web/             React + TypeScript brand site, chat (cart, emails, tool inspector), ops console
 docs/            BRIEF, GUARDRAILS, PRIVATE_CLOUD_DESIGN, HANDOVER, DEMO_AND_RESUME

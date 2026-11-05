@@ -1,0 +1,90 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": 1.0,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 29743.9,
+      "p95": 31366.9,
+      "turns": 3
+    },
+    "by_category": {
+      "shopping": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 69.9,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "shop-checkout-anonymous",
+      "category": "shopping",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": true,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        8188.4,
+        31366.9,
+        29743.9
+      ],
+      "transcript": [
+        {
+          "user": "compact umbrella",
+          "route": "advisor",
+          "reply": "Here are a few compact umbrellas you might like:\n\n1. **Kesar Lane Compact 3-Fold Umbrella** – ₹299 (MRP ₹399)  \n2. **Kesar Lane UV Block Umbrella** – ₹299 (MRP ₹299)  \n3. **Kesar Lane Golf-Size Umbrella** – ₹499 (MRP ₹599)  \n4. **Kesar Lane Windproof Auto Umbrella** – ₹699 (MRP ₹999)\n\nAll of them come in a single size (ONE).  \nWhich one would you like to add to your cart? (Just reply with the option number.)",
+          "tools": [
+            [
+              "search_products",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "add the first one",
+          "route": "advisor",
+          "reply": "Great! The **Kesar Lane Compact 3-Fold Umbrella** in **black** has been added to your cart.  \nOther available colours: navy, yellow.  \n\nWould you like to add anything else, apply a discount, or proceed to checkout?",
+          "tools": [
+            [
+              "add_to_cart",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "checkout please",
+          "route": "advisor",
+          "reply": "It looks like you’re not signed in yet. Please log in or create an account, then we can proceed to checkout. Let me know once you’re signed in!",
+          "tools": [
+            [
+              "start_checkout",
+              "need_login"
+            ]
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

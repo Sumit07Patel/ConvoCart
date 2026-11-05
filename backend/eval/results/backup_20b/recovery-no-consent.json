@@ -1,0 +1,87 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": null,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 2516.2,
+      "p95": 18935.0,
+      "turns": 2
+    },
+    "by_category": {
+      "recovery": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 22.1,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "recovery-no-consent",
+      "category": "recovery",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": null,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        2516.2,
+        18935.0
+      ],
+      "transcript": [
+        {
+          "user": "compact umbrella",
+          "route": "advisor",
+          "reply": "Here are a few compact umbrellas you might like:\n\n1. **Kesar Lane Compact 3‑Fold Umbrella** – ₹299 (MRP ₹399) – Size: ONE – Colors: black, navy, yellow  \n2. **Kesar Lane UV Block Umbrella** – ₹299 – Size: ONE – Colors: black, navy  \n3. **Kesar Lane Golf‑Size Umbrella** – ₹499 – Size: ONE – Colors: navy, yellow  \n4. **Kesar Lane Windproof Auto Umbrella** – ₹699 – Size: ONE – Color: black  \n\nLet me know which one you’d like to add to your cart and the color.",
+          "tools": [
+            [
+              "search_products",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "add the first one",
+          "route": "advisor",
+          "reply": "✅ Added “Kesar Lane Compact 3‑Fold Umbrella” (black, ONE) to your cart.  \nYour cart total is ₹299.  \nWould you like to add anything else or proceed to checkout?",
+          "tools": [
+            [
+              "add_to_cart",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "recovery": [
+            {
+              "status": "blocked",
+              "detail": "no_consent",
+              "body": ""
+            }
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

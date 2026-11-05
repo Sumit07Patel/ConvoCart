@@ -44,7 +44,7 @@
       "hi": "6/6",
       "hinglish": "10/11"
     },
-    "wall_time_s": 218.3,
+    "wall_time_s": 2.8,
     "break_rule": ""
   },
   "rows": [
@@ -1928,40 +1928,6 @@
       "model_error": ""
     },
     {
-      "id": "return-outside-window",
-      "category": "returns",
-      "lang": "en",
-      "success": true,
-      "tool_use_ok": true,
-      "expected_handover": null,
-      "handed_over": false,
-      "language_ok": null,
-      "failed_checks": [],
-      "violations": [],
-      "guard_replacements": 0,
-      "latencies_ms": [
-        2443.6
-      ],
-      "transcript": [
-        {
-          "user": "I want to return ORD-10003",
-          "route": "support",
-          "reply": "Order ORD-10003 was delivered more than 15 days ago, so it's outside the return window.",
-          "tools": [
-            [
-              "get_order",
-              "ok"
-            ],
-            [
-              "create_return",
-              "outside_window"
-            ]
-          ]
-        }
-      ],
-      "model_error": "groq:openai/gpt-oss-120b failed: HTTP 400: {\"error\":{\"message\":\"Parsing failed. The model generated output that could not be parsed. Please adjust your prompt. See 'failed_generation' for more details"
-    },
-    {
       "id": "recovery-opted-in-returns",
       "category": "recovery",
       "lang": "hinglish",
@@ -2128,6 +2094,38 @@
       "model_error": ""
     },
     {
+      "id": "return-outside-window",
+      "category": "returns",
+      "lang": "en",
+      "success": false,
+      "tool_use_ok": false,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [
+        "err:create_return:outside_window"
+      ],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        1080.3
+      ],
+      "transcript": [
+        {
+          "user": "I want to return ORD-10003",
+          "route": "support",
+          "reply": "Order ORD-10003 was delivered on 24 Sep 2026.",
+          "tools": [
+            [
+              "get_order",
+              "ok"
+            ]
+          ]
+        }
+      ],
+      "model_error": "groq:openai/gpt-oss-120b failed: HTTP 429: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m69dxckferntkj1s1pedph3y` service tier `on_demand` on tokens p"
+    },
+    {
       "id": "recovery-visitor-no-consent",
       "category": "recovery",
       "lang": "en",
@@ -2143,20 +2141,15 @@
       "violations": [],
       "guard_replacements": 0,
       "latencies_ms": [
-        6426.0,
-        7296.1
+        112.1,
+        122.6
       ],
       "transcript": [
         {
           "user": "compact umbrella",
           "route": "advisor",
-          "reply": "Here are a few compact umbrellas we have in stock:\n\n1. **Kesar Lane Compact 3‑Fold Umbrella** – ₹299 (black, navy, yellow) – Size: ONE  \n2. **Kesar Lane UV Block Umbrella** – ₹299 (black, navy) – Size: ONE  \n3. **Kesar Lane Golf Size Umbrella** – ₹499 (navy, yellow) – Size: ONE (slightly larger but still compact)  \n4. **Kesar Lane Windproof Auto Umbrella** – ₹699 (black) – Size: ONE  \n\nLet me know which one you’d like and the color, and I’ll add it to your cart!",
-          "tools": [
-            [
-              "search_products",
-              "ok"
-            ]
-          ]
+          "reply": "Something went wrong on our side. Please try again in a minute.",
+          "tools": []
         },
         {
           "user": "add the first one",
@@ -2183,8 +2176,8 @@
       "violations": [],
       "guard_replacements": 0,
       "latencies_ms": [
-        363.6,
-        67.5
+        98.0,
+        63.1
       ],
       "transcript": [
         {
@@ -2218,9 +2211,9 @@
       "violations": [],
       "guard_replacements": 0,
       "latencies_ms": [
-        500.1,
-        67.6,
-        63.2
+        107.7,
+        74.2,
+        68.1
       ],
       "transcript": [
         {
@@ -2260,8 +2253,8 @@
       "violations": [],
       "guard_replacements": 0,
       "latencies_ms": [
-        99.9,
-        62.7
+        95.5,
+        68.5
       ],
       "transcript": [
         {
@@ -2292,8 +2285,8 @@
       "violations": [],
       "guard_replacements": 0,
       "latencies_ms": [
-        98.4,
-        70.7
+        94.5,
+        58.2
       ],
       "transcript": [
         {

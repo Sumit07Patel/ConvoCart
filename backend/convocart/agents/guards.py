@@ -14,6 +14,13 @@ PERCENT = re.compile(r"(\d{1,3})\s*(?:%|percent|प्रतिशत)", re.I)
 WRONG_CURRENCY = re.compile(r"(?:\$|US\$|USD|€|£|EUR|GBP)\s*\d|\d\s*(?:USD|EUR|GBP|dollars?)\b", re.I)
 
 
+# Internal tool names must never reach a shopper. A test keeps this list in step with TOOLS.
+TOOL_NAME = re.compile(r"\b(?:search_products|get_product_details|add_to_cart|view_cart|remove_from_cart|apply_discount|"
+                       r"start_checkout|get_order|list_my_orders|create_return|handover_to_human|route_to)\b")
+# Models like non-breaking hyphens; "ORD\u201110001" looks right but breaks when a shopper copies it back.
+ODD_HYPHENS = str.maketrans({"\u2010": "-", "\u2011": "-"})
+
+
 def collect_numbers(obj, out: set[int] | None = None) -> set[int]:
     out = set() if out is None else out
     if isinstance(obj, bool):
@@ -59,6 +66,8 @@ def check_reply(reply: str, language: str, tool_results: list[dict], extra_numbe
         issues["unverified_price"] = bad
     if WRONG_CURRENCY.search(reply):
         issues["wrong_currency"] = True
+    if TOOL_NAME.search(reply):
+        issues["tool_name_leak"] = True
     over = promised_discounts(reply, max_pct)
     if over and not discount_refused:
         issues["discount_over_cap"] = over

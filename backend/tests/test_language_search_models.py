@@ -155,3 +155,65 @@ def test_step_limit_hands_over(db):
 
     out = ConvoCartAgent(model=Looper()).handle_message("web:looper", "hi", customer_id="C0001")
     assert out["handover"] and out["handover_reason"] == "step_limit"
+
+
+def test_tool_name_guard_covers_every_tool():
+    from convocart.agents.guards import TOOL_NAME
+    from convocart.tools.core import TOOLS
+
+    assert all(TOOL_NAME.search(f"say {n} now") for n in TOOLS)
+    assert not TOOL_NAME.search("Your cart has 2 items. Would you like to check out?")
+
+
+class _Says:
+    """A model that routes to the advisor, then says one fixed thing."""
+    name = "says"
+
+    def __init__(self, text):
+        self.text = text
+
+    def chat(self, messages, tools=None, tool_choice=None):
+        from convocart.llm.base import ModelReply, ToolCall
+
+        if tool_choice:
+            return ModelReply(tool_calls=[ToolCall("r", "route_to", {"agent": "advisor"})])
+        return ModelReply(content=self.text)
+
+
+def test_reply_with_a_tool_name_is_replaced(db):
+    from convocart.agents.graph import ConvoCartAgent
+
+    out = ConvoCartAgent(model=_Says("To see your cart, say `view_cart`.")).handle_message("web:leak", "hi", customer_id="C0001")
+    assert out["issues"].get("tool_name_leak") and "view_cart" not in out["reply"]
+
+
+def test_order_ids_keep_a_plain_hyphen(db):
+    from convocart.agents.graph import ConvoCartAgent
+
+    out = ConvoCartAgent(model=_Says("Your order is ORD\u201110001.")).handle_message("web:hyphen", "hi", customer_id="C0001")
+    assert "ORD-10001" in out["reply"]
+
+
+def test_return_reason_is_optional():
+    from convocart.tools.core import ReturnArgs
+
+    assert ReturnArgs(order_id="ORD-10001", kind="return").reason == "not given"
+
+
+def test_reply_in_the_wrong_language_is_replaced(db):
+    from convocart.agents.graph import ConvoCartAgent
+    from convocart.llm.base import ModelReply, ToolCall
+
+    class AnswersInEnglish:
+        name = "english"
+
+        def chat(self, messages, tools=None, tool_choice=None):
+            if tool_choice:
+                return ModelReply(tool_calls=[ToolCall("r", "route_to", {"agent": "advisor"})])
+            if any(m["role"] == "tool" for m in messages):
+                return ModelReply(content="Here are some jackets you might like.")
+            return ModelReply(tool_calls=[ToolCall("s", "search_products", {"query": "rain jacket"})])
+
+    out = ConvoCartAgent(model=AnswersInEnglish()).handle_message("web:lang", "monsoon ke liye jacket dikhao",
+                                                                  customer_id="C0001")
+    assert out["issues"].get("language_mismatch") == "hinglish" and "you might like" not in out["reply"]

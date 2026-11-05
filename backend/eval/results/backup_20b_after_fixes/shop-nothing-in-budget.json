@@ -1,0 +1,66 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": 1.0,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 13887.5,
+      "p95": 13887.5,
+      "turns": 1
+    },
+    "by_category": {
+      "shopping": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 14.5,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "shop-nothing-in-budget",
+      "category": "shopping",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": true,
+      "expected_handover": false,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        13887.5
+      ],
+      "transcript": [
+        {
+          "user": "silk saree for a wedding under 500",
+          "route": "advisor",
+          "reply": "I couldn’t find any silk sarees under ₹500. Here are a few options that are a bit higher but still affordable for a wedding:\n\n1. **Kesar Lane Kanjeevaram Silk Saree** – ₹3,199 (MRP ₹4,799) – Size: ONE – Colours: gold, maroon, red  \n2. **Kesar Lane Patola Print Saree** – ₹3,599 (MRP ₹3,599) – Size: ONE – Colours: blue, pink  \n3. **Kesar Lane Banarasi Silk Saree** – ₹6,599 (MRP ₹6,599) – Size: ONE – Colours: blue, gold, green  \n\nWould you like to add any of these to your cart? If so, let me know the option number and the colour (or I can pick a colour for you).",
+          "tools": [
+            [
+              "search_products",
+              "ok"
+            ]
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

@@ -26,7 +26,9 @@ const RULES = [
 
 const RESULTS = [
   ["9 / 10", "Tool-calling test on Groq openai/gpt-oss-120b: the right tool with valid arguments. Used to pick the model."],
-  ["6 / 6", "First conversation scenarios on that live model: search and add-to-cart in English, Hinglish and Hindi."],
+  ["38 / 51", "First run on that live model, before any fixes: 0 guardrail violations and 6 of 6 needed handovers made."],
+  ["5 / 6", "The 6 scenarios the free quota blocked, run on the backup model gpt-oss-20b: 0 guardrail violations."],
+  ["14 / 14", "All 14 first-run failures after fixing the agent and tests, rerun on the backup model: 0 guardrail violations."],
   ["40 / 40", "Search: a right product in the top 4 on the tuned set (16 English, 14 Hinglish, 10 Hindi)."],
   ["10 / 12", "Search on a held-out set of phrasings the lexicon was not tuned on. Misses: “barsaati”, “pani mein kharab na ho”."],
   ["57 / 57", "Conversation scenarios passed, including 8 attacks, with 0 guardrail violations and every needed handover made (rule-based stand-in model)."],
@@ -107,9 +109,9 @@ export default function Project({ health }: { health: Health }) {
             {RESULTS.map(([n, d]) => <div key={d} className="card-l stat"><p className="num">{n}</p><p>{d}</p></div>)}
           </div>
           <p className="caveat">What these numbers do not show: the 57 scenarios were scored with a rule-based stand-in
-            model, so they prove the rules and plumbing, not the live model's judgement. On the live model only the first
-            scenarios have run so far: Groq's free tier allows about 200,000 tokens a day and a full run needs more, so it
-            is being finished over two days. The search sets are small and written by me, and the Hindi replies still need
+            model, so they prove the rules and plumbing, not the live model's judgement. None of the 14 live failures broke a
+            rule, and the fixes include changes to the tests as well as the agent. The fixes have not yet been rerun on the
+            main model, because Groq's free tier limits it to about 200,000 tokens a day. The search sets are small and written by me, and the Hindi replies still need
             review by a native speaker. {health?.provider ? `This page is currently using the ${health.provider} model.` : ""}</p>
 
           <h3 className="h3">Engineering decisions</h3>

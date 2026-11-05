@@ -22,7 +22,7 @@ from ..llm import ChatModel, ModelError, get_model
 from ..llm.scripted import ScriptedModel
 from ..tools.core import ToolContext, run_tool, tool_schemas
 from .compose import compose_tool_result
-from .guards import check_reply
+from .guards import ODD_HYPHENS, check_reply
 from .language import detect_language, t
 from .prompts import system_prompt
 
@@ -181,7 +181,7 @@ class ConvoCartAgent:
 
     def _guard(self, s: TurnState) -> dict:
         ctx: ToolContext = s["rt"]
-        reply = s.get("reply") or t("fallback", s["language"])
+        reply = (s.get("reply") or t("fallback", s["language"])).translate(ODD_HYPHENS)
         results = [c["result"] for c in ctx.calls]
         extra = set()
         for r in ctx.memory.get("last_results", []):
@@ -195,11 +195,12 @@ class ConvoCartAgent:
         refused = any(c["name"] == "apply_discount" and c["error"] == "over_limit" for c in ctx.calls)
         issues = dict(s.get("issues") or {})
         issues.update(check_reply(reply, s["language"], results, extra, self.rules.max_discount_pct, refused))
-        if issues.get("unverified_price") or issues.get("discount_over_cap") or issues.get("wrong_currency"):
+        good_calls = [c for c in ctx.calls if c["name"] not in ("route_to",)]
+        if issues.get("unverified_price") or issues.get("discount_over_cap") or issues.get("wrong_currency") \
+                or issues.get("tool_name_leak") or (issues.get("language_mismatch") and good_calls):
             ctx.tracer.add("guard", "guard", "reply_replaced", issues)
-            good = [c for c in ctx.calls if c["name"] not in ("route_to",)]
-            reply = compose_tool_result(good[-1]["name"], good[-1]["args"], good[-1]["result"], s["language"]) \
-                if good else t("fallback", s["language"])
+            reply = compose_tool_result(good_calls[-1]["name"], good_calls[-1]["args"], good_calls[-1]["result"],
+                                        s["language"]) if good_calls else t("fallback", s["language"])
         elif issues:
             ctx.tracer.add("guard", "guard", "flag", issues)
         return {"reply": reply, "issues": issues}

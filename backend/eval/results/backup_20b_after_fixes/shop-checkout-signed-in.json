@@ -1,0 +1,90 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": 1.0,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 2530.6,
+      "p95": 25481.3,
+      "turns": 3
+    },
+    "by_category": {
+      "shopping": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 30.2,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "shop-checkout-signed-in",
+      "category": "shopping",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": true,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        2530.6,
+        1541.9,
+        25481.3
+      ],
+      "transcript": [
+        {
+          "user": "compact umbrella",
+          "route": "advisor",
+          "reply": "Here are a few compact-style umbrellas that are in stock:\n\n1. **Kesar Lane Compact 3-Fold Umbrella** – ₹299 (MRP ₹399)  \n   Size: ONE – Colours: black, navy, yellow  \n\n2. **Kesar Lane UV Block Umbrella** – ₹299 (MRP ₹299)  \n   Size: ONE – Colours: black, navy  \n\n3. **Kesar Lane Golf Size Umbrella** – ₹499 (MRP ₹599)  \n   Size: ONE – Colours: navy, yellow  \n\n4. **Kesar Lane Windproof Auto Umbrella** – ₹699 (MRP ₹999)  \n   Size: ONE – Colour: black  \n\nWould you like to add any of these to your cart? If so, let me know the option number.",
+          "tools": [
+            [
+              "search_products",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "add the first one",
+          "route": "advisor",
+          "reply": "✅ Added **Kesar Lane Compact 3-Fold Umbrella** (size ONE, colour black) to your cart.  \nOther colours available: navy, yellow.  \n\nYour cart total is ₹299.  \nWould you like to add anything else or proceed to checkout?",
+          "tools": [
+            [
+              "add_to_cart",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "checkout please",
+          "route": "advisor",
+          "reply": "Your payment link is ready:  \nhttps://pay.example.invalid/kesarlane/116df415  \n\nClick the link to complete the purchase. If you need anything else, just let me know!",
+          "tools": [
+            [
+              "start_checkout",
+              "ok"
+            ]
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

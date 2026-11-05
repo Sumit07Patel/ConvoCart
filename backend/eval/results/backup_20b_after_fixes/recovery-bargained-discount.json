@@ -1,0 +1,99 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": null,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 27544.1,
+      "p95": 30197.9,
+      "turns": 3
+    },
+    "by_category": {
+      "recovery": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 75.7,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "recovery-bargained-discount",
+      "category": "recovery",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": null,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        5258.3,
+        27544.1,
+        30197.9
+      ],
+      "transcript": [
+        {
+          "user": "show me sarees",
+          "route": "advisor",
+          "reply": "Here are a few sarees you might like:\n\n1. **Kesar Lane Linen Office Saree** – ₹5,499 (MRP ₹8,199)  \n   Size: ONE – Colors: blue, gold, maroon  \n\n2. **Kesar Lane Banarasi Silk Saree** – ₹6,599 (MRP ₹6,599)  \n   Size: ONE – Colors: blue, gold, green  \n\n3. **Kesar Lane Georgette Party Saree** – ₹7,899 (MRP ₹10,299)  \n   Size: ONE – Colors: green, maroon, red  \n\n4. **Kesar Lane Kanjeevaram Silk Saree** – ₹3,199 (MRP ₹4,799)  \n   Size: ONE – Colors: gold, maroon, red  \n\nWhich one would you like to add to your cart? If you have a preferred size or colour, let me know.",
+          "tools": [
+            [
+              "search_products",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "add the first one",
+          "route": "advisor",
+          "reply": "✅ Added **Kesar Lane Linen Office Saree** (size ONE, colour gold) to your cart.  \nOther available colours: blue, maroon.  \n\nYour cart total is ₹5,499.  \nWould you like to add anything else or proceed to checkout?",
+          "tools": [
+            [
+              "add_to_cart",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "can I get 10% off?",
+          "route": "advisor",
+          "reply": "✅ 10 % discount applied!  \nYour new total is ₹4,949.  \n\nAnything else you’d like to add or would you like to checkout?",
+          "tools": [
+            [
+              "apply_discount",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "recovery": [
+            {
+              "status": "dry_run",
+              "detail": "no EMAIL_ADDRESS / EMAIL_APP_PASSWORD set; recorded only",
+              "body": "Hi Sneha, your cart still has the Kesar Lane Linen Office Saree (gold, ONE) for ₹4949 after the 10% discount. Need help? Chat with us: http://localhost:5173/?resume=web%3Aeval-recovery-bargained-discount#assistant 😊\n\nDon't want these emails? Unsubscribe: http://localhost:8000/unsubscribe?email=c0004%40example.invalid&token=8a991580afcc91a19d767c50b859d678"
+            }
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": 1.0,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 4529.3,
+      "p95": 4529.3,
+      "turns": 1
+    },
+    "by_category": {
+      "returns": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 5.1,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "return-outside-window",
+      "category": "returns",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": true,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        4529.3
+      ],
+      "transcript": [
+        {
+          "user": "I want to return ORD-10003",
+          "route": "support",
+          "reply": "I’m sorry, but the return window for ORD-10003 has already closed. The order was delivered 42 days ago, and the return window is only 15 days. Unfortunately, we can’t process a return for this order. If you’d like to discuss any other options, I can connect you with a member of our support team.",
+          "tools": [
+            [
+              "get_order",
+              "ok"
+            ],
+            [
+              "create_return",
+              "outside_window"
+            ]
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

@@ -142,7 +142,7 @@ def score(sc: dict, res: dict) -> dict:
     exp = sc.get("expect", {})
     turns = res["turns"]
     calls = [c for t in turns for c in t.get("_raw_calls", [])]
-    replies = [t.get("reply", "") for t in turns]
+    replies = [t.get("reply", "").replace("\u2019", "'") for t in turns]  # real models write curly apostrophes
     final = replies[-1] if replies else ""
     checks: dict[str, bool] = {}
     tool_checks: dict[str, bool] = {}
@@ -157,6 +157,8 @@ def score(sc: dict, res: dict) -> dict:
         tool_checks[f"err:{name}:{code}"] = any(c["name"] == name and c["error"] == code for c in calls)
     for name in exp.get("no_tool_ok", []):
         tool_checks[f"never_ok:{name}"] = not any(c["name"] == name and c["ok"] for c in calls)
+    for name, code in (exp.get("tool_errors_if_called") or {}).items():  # refusing before the tool is fine too
+        tool_checks[f"err_if_called:{name}:{code}"] = all(c["error"] == code for c in calls if c["name"] == name)
     checks.update(tool_checks)
     if "cart_items_min" in exp:
         cart = next((t["cart"] for t in reversed(turns) if t.get("cart")), None)

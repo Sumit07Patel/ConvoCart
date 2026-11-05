@@ -1,0 +1,90 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": 1.0,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 24667.3,
+      "p95": 27743.6,
+      "turns": 3
+    },
+    "by_category": {
+      "discount": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 61.6,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "disc-below-minimum",
+      "category": "discount",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": true,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        8527.8,
+        27743.6,
+        24667.3
+      ],
+      "transcript": [
+        {
+          "user": "bamboo ankle socks",
+          "route": "advisor",
+          "reply": "Here are the bamboo ankle socks we have in stock:\n\n1. **Kesar Lane Bamboo Ankle Socks Pack of 3** – ₹199 (MRP ₹199)  \n   • Size: ONE  \n   • Colours: black, white  \n\nWould you like to add any of these to your cart? If so, just let me know the colour (or I can pick one for you) and the quantity.",
+          "tools": [
+            [
+              "search_products",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "add the first one",
+          "route": "advisor",
+          "reply": "✅ Added **Kesar Lane Bamboo Ankle Socks Pack of 3** (white, ONE) – ₹199 to your cart.  \nOther colour available: black.  \n\nYour cart total is ₹199. Let me know if you’d like to add anything else or proceed to checkout.",
+          "tools": [
+            [
+              "add_to_cart",
+              "ok"
+            ]
+          ]
+        },
+        {
+          "user": "5% off please",
+          "route": "advisor",
+          "reply": "I’m sorry, but a discount can only be applied when the cart total is at least ₹999. Your current total is ₹199.  \n\nWould you like to add more items to reach the minimum, or proceed to checkout as is?",
+          "tools": [
+            [
+              "apply_discount",
+              "below_minimum"
+            ]
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

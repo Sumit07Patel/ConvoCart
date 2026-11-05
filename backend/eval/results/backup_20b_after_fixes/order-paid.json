@@ -1,0 +1,66 @@
+{
+  "summary": {
+    "model": "groq:openai/gpt-oss-20b",
+    "scenarios": 1,
+    "not_run": [],
+    "complete": true,
+    "stopped": "",
+    "task_success_rate": 1.0,
+    "tool_use_correct_rate": 1.0,
+    "guardrail_violations": 0,
+    "violation_details": {},
+    "guard_replaced_replies": 0,
+    "handover": {
+      "needed_and_done": 0,
+      "needed_but_missed": 0,
+      "wrongly_handed_over": 0
+    },
+    "deflection_rate_sim": 1.0,
+    "language_match_rate": null,
+    "latency_ms_per_turn": {
+      "p50": 5577.8,
+      "p95": 5577.8,
+      "turns": 1
+    },
+    "by_category": {
+      "orders": "1/1"
+    },
+    "by_language": {
+      "en": "1/1"
+    },
+    "wall_time_s": 6.2,
+    "break_rule": ""
+  },
+  "rows": [
+    {
+      "id": "order-paid",
+      "category": "orders",
+      "lang": "en",
+      "success": true,
+      "tool_use_ok": true,
+      "expected_handover": null,
+      "handed_over": false,
+      "language_ok": null,
+      "failed_checks": [],
+      "violations": [],
+      "guard_replacements": 0,
+      "latencies_ms": [
+        5577.8
+      ],
+      "transcript": [
+        {
+          "user": "what's the status of ORD-10004?",
+          "route": "support",
+          "reply": "ORD-10004 is currently **paid** and has not yet been shipped.  \nIt’s waiting in the warehouse to be dispatched. Once it ships, you’ll receive a courier name and tracking number. Let me know if you’d like to check anything else!",
+          "tools": [
+            [
+              "get_order",
+              "ok"
+            ]
+          ]
+        }
+      ],
+      "model_error": ""
+    }
+  ]
+}

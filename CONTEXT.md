@@ -76,6 +76,7 @@ Evals (from backend/): `pytest`; `python -m eval.run_search_eval`; `python -m ev
 | Tool-calling test, Groq gpt-oss-120b | 9/10 (miss: looked up the order before starting a refund) |
 | Live scenarios, Groq gpt-oss-120b (2026-11-05, tests unchanged) | **38/51 passed (74.5%), 0 guardrail violations, 6 not run.** Handovers 6/6, language match 100%. None of the 13 failures broke a rule: 6 are the colour question the script never answers. See "Finish the live test run" below |
 | Scenarios, scripted model | 57/57, 0 guardrail violations; broken-rule proof 4 and 2 violations; 6/6 handovers; deflection 51/57 |
+| Live scenarios, backup model Groq gpt-oss-20b (2026-11-05) | **5/6 passed, 0 guardrail violations**: only the 6 scenarios the main model could not finish. Miss: `return-outside-window` (asked for a reason, the script never answered). Finding: a Hindi chat reply showed the tool name `view_cart` to the shopper |
 | Search hit rate | 40/40 tuned, 10/12 holdout (misses "barsaati", "pani mein kharab na ho aise jute") |
 | Real email | come-back email (bargained 10%) and order confirmation delivered to the Gmail inbox |
 | Website walkthrough (Playwright) | tile → add → bargain → own email → leave → pay → link from email reopens the cart; no browser errors |
@@ -86,16 +87,22 @@ Evals (from backend/): `pytest`; `python -m eval.run_search_eval`; `python -m ev
 - Groq free tier for gpt-oss-120b: **8,000 tokens/minute, 200,000 tokens/day, 1,000 requests/day**. A full 57-scenario run needs more than a day's tokens; split it with `--resume`. The runner now marks model-error turns "not run" and stops on the daily limit.
 - Real-model findings fixed so far: loose categories ("jacket") broke search; "$299" in an email (currency guard added); invented delivery estimates (prompt rule); Markdown in emails (plain-text conversion); the "asks for size" test was too strict (the model asking for the size itself is fine).
 
+## Fixes after the first live run (2026-11-05)
+
+The 14 failures were fixed in the agent and tests, then rerun on `gpt-oss-20b` only: 14/14 passed, 0 violations (`backend/eval/results/backup_20b_after_fixes/`). Keep the as-measured scores (38/51 on 120b, 5/6 on 20b) next to this one and disclose that tests changed. Agent: default colour, return without a reason first, no unbacked promises, plain hyphens, tool-name and wrong-language guards. Tests: added `tool_errors_if_called`, widened wording in shop-nothing-in-budget, order-paid, return-not-delivered, refund-not-your-order, dropped `list_my_orders` from return-two-step, added checks for couriers and promised emails.
+
+Not proven yet: these fixes on `gpt-oss-120b`, and the other 43 scenarios on the changed agent. `--resume` keeps old failed rows, so to measure this use a new output file: `.venv/bin/python -m eval.run_scenarios --provider groq --sleep 15 --resume --out eval/results/scenarios_groq_after_fixes.json`, repeated over about 2 days. Known leftovers: replies can still show `pickup_scheduled`, and return-two-step mentioned a link "sent earlier" that does not exist.
+
 ## Finish the live test run (do this first)
 
-Only 6 of the 57 scenarios are left. Run this from `backend/`, with the laptop awake:
+Every scenario has now run once, but not all on the same model: on 2026-11-05 the 6 below ran on the backup model `gpt-oss-20b` (5/6 passed, 0 violations, results in `backend/eval/results/backup_20b/`, one file each). Those scores are reported separately and never merged into the 38/51. The steps below are optional: they rerun the same 6 on the main model. Run this from `backend/`, with the laptop awake:
 
 ```bash
 .venv/bin/python -m eval.run_scenarios --provider groq --sleep 15 --resume
 ```
 
 - `--resume` reads `backend/eval/results/scenarios_groq.json`, keeps the 51 finished rows and reruns only the rows that have a `model_error`.
-- **The 51 results are committed on branch `live-eval-results`, not on `main` (not pushed yet). Run `git switch live-eval-results` first, or the old results load and most scenarios rerun. Do not run without `--resume`.**
+- **The 51 results are on `main`. Do not run without `--resume`, or they are overwritten.**
 - Left to run: `recovery-visitor-no-consent`, `recovery-no-consent`, `recovery-only-once`, `recovery-hindi`, `recovery-anonymous-cart` (blocked by the daily token limit, so they need quota) and `return-outside-window` (Groq "Parsing failed" HTTP 400 twice, so waiting may not fix it).
 - If the run stops at the daily limit, the finished rows are kept and the rest stay "not run". Run the same command later.
 - After it finishes, report the new total and update `web/src/Project.tsx`, `README.md`, this file and the portfolio site. Do not change `scenarios.yaml` before the run: any test fix (such as answering the colour question) must be disclosed, with the as-measured score kept alongside the rescored one.
