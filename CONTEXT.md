@@ -1,7 +1,7 @@
 # ConvoCart: context for continuing this project
 
 Paste this file at the start of a new chat (with Claude or another assistant) to pick up where we left off.
-Last updated: 2026-11-02.
+Last updated: 2026-11-05.
 
 ## What the project is
 
@@ -74,7 +74,7 @@ Evals (from backend/): `pytest`; `python -m eval.run_search_eval`; `python -m ev
 | Measure | Result |
 | --- | --- |
 | Tool-calling test, Groq gpt-oss-120b | 9/10 (miss: looked up the order before starting a refund) |
-| Live scenarios, Groq gpt-oss-120b | **6/6 so far** (search + add-to-cart, EN/Hinglish/Hindi). The full run hit Groq's **200k tokens/day** limit; 51 scenarios still to run with `--resume` |
+| Live scenarios, Groq gpt-oss-120b (2026-11-05, tests unchanged) | **38/51 passed (74.5%), 0 guardrail violations, 6 not run.** Handovers 6/6, language match 100%. None of the 13 failures broke a rule: 6 are the colour question the script never answers. See "Finish the live test run" below |
 | Scenarios, scripted model | 57/57, 0 guardrail violations; broken-rule proof 4 and 2 violations; 6/6 handovers; deflection 51/57 |
 | Search hit rate | 40/40 tuned, 10/12 holdout (misses "barsaati", "pani mein kharab na ho aise jute") |
 | Real email | come-back email (bargained 10%) and order confirmation delivered to the Gmail inbox |
@@ -86,11 +86,25 @@ Evals (from backend/): `pytest`; `python -m eval.run_search_eval`; `python -m ev
 - Groq free tier for gpt-oss-120b: **8,000 tokens/minute, 200,000 tokens/day, 1,000 requests/day**. A full 57-scenario run needs more than a day's tokens; split it with `--resume`. The runner now marks model-error turns "not run" and stops on the daily limit.
 - Real-model findings fixed so far: loose categories ("jacket") broke search; "$299" in an email (currency guard added); invented delivery estimates (prompt rule); Markdown in emails (plain-text conversion); the "asks for size" test was too strict (the model asking for the size itself is fine).
 
+## Finish the live test run (do this first)
+
+Only 6 of the 57 scenarios are left. Run this from `backend/`, with the laptop awake:
+
+```bash
+.venv/bin/python -m eval.run_scenarios --provider groq --sleep 15 --resume
+```
+
+- `--resume` reads `backend/eval/results/scenarios_groq.json`, keeps the 51 finished rows and reruns only the rows that have a `model_error`.
+- **The 51 results are committed on branch `live-eval-results`, not on `main` (not pushed yet). Run `git switch live-eval-results` first, or the old results load and most scenarios rerun. Do not run without `--resume`.**
+- Left to run: `recovery-visitor-no-consent`, `recovery-no-consent`, `recovery-only-once`, `recovery-hindi`, `recovery-anonymous-cart` (blocked by the daily token limit, so they need quota) and `return-outside-window` (Groq "Parsing failed" HTTP 400 twice, so waiting may not fix it).
+- If the run stops at the daily limit, the finished rows are kept and the rest stay "not run". Run the same command later.
+- After it finishes, report the new total and update `web/src/Project.tsx`, `README.md`, this file and the portfolio site. Do not change `scenarios.yaml` before the run: any test fix (such as answering the colour question) must be disclosed, with the as-measured score kept alongside the rescored one.
+
 ## Not done yet / next steps
 
 1. **Git: done (2026-11-02).** The project is its own repository in `convocart/`, pushed to `github.com/Sumit07Patel/ConvoCart` (branch `main`, SSH key works). The home-folder repository is not used for this project.
 2. **Render** (user wants to do this step together): Blueprint from `render.yaml`; set `LLM_PROVIDER=groq`, `LLM_MODEL=openai/gpt-oss-120b`, `LLM_API_KEY`, `EMAIL_ADDRESS`, `EMAIL_APP_PASSWORD`, `EMAIL_FROM`, `DEMO_LINKED_EMAIL`; check `PUBLIC_WEB_URL` and `VITE_API_URL` match the real service names.
-3. Finish the live scenario run (`--resume`) once the daily quota resets, then update the numbers on the site and README.
+3. Finish the live scenario run: see "Finish the live test run" above.
 4. Rotate the Gmail app password (it was pasted into a chat).
 5. Native Hindi speaker review; per-visitor rate limit on `/chat` before sharing the public link widely.
 6. A backup of the project before the WhatsApp/inbound-email removal: `/home/admin/convocart-backup-2026-11-02-before-chat-only.tar.gz` (contains `.env`).
